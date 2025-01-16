@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>ES6Promise和await原理 | 一亩三分地</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    <link rel="icon" href="/cs_knowledge_base_vuepress_vdoing_publish/img/favicon.ico">
+    <meta name="description" content="web前端技术博客,简洁至上,专注web前端学习与总结。JavaScript,js,ES6,TypeScript,vue,python,css3,html5,Node,git,github等技术文章。">
+    <meta name="keywords" content="前端博客,个人技术博客,前端,前端开发,前端框架,web前端,前端面试题,技术文档,学习,面试,JavaScript,js,ES6,TypeScript,vue,python,css3,html5,Node,git,github,markdown">
+    <meta name="theme-color" content="#11a8cd">
+    
+    <link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/css/0.styles.87f66710.css" as="style"><link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/app.e20338f0.js" as="script"><link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/4.0a1770ce.js" as="script"><link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/3.5fe0b606.js" as="script"><link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/2.952c14e1.js" as="script"><link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/58.86f960f7.js" as="script"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/1.ffdd0f4a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/10.733b4090.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/100.8988fbda.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/101.0648c38a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/102.60c6fb35.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/103.333708e1.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/104.79d71a4e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/105.1be97b21.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/106.bae470ff.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/107.47f52ded.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/108.fe039118.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/109.b0f37852.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/11.6801ef91.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/110.7dac4dcb.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/111.28c49093.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/112.e1952b70.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/113.14305e5c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/114.e8b79fbe.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/115.6e64c2ab.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/116.f0dda052.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/117.2fabcdd5.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/118.e7fd60dd.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/119.33a436bc.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/12.25b88290.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/120.c29e52f4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/121.edaa5e84.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/122.16df3471.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/123.182c1ddd.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/124.d36d5cdb.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/125.0ebec260.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/126.63a047a2.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/127.4920c20c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/128.e5072b6c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/129.924ae959.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/13.72a3d56d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/130.6307f6eb.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/131.ba006b29.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/132.212757cb.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/133.f8f299d4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/134.094aa965.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/135.68b1b456.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/136.ebd4017b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/137.555e8267.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/138.209ed71d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/139.59d3ce91.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/14.00c4d42e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/140.3a035862.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/141.62553494.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/142.4f3f431c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/143.1cffd997.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/144.e535819c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/145.13e1c753.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/146.b770440e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/147.a19f0c9a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/148.0755e776.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/149.09382547.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/15.b49fb3dd.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/150.2f33a54e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/151.9a670809.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/152.a6e6a440.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/153.4f7f1998.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/154.c642bc59.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/155.5b0bbe6e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/156.b7b980ca.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/157.a824b65b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/158.c634a203.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/159.3cc46c68.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/16.cc7b110a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/160.8bc40058.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/161.6b33088e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/162.a21861c2.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/163.c43e66c9.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/164.74038262.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/165.449c3f8e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/166.ecb6064c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/167.93bebda4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/168.a9285a86.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/169.14628ce4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/17.dda61996.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/170.cb080ae3.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/171.3c6d8998.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/172.cf75a1ea.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/173.f66209c2.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/174.fbc96323.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/175.503a035b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/176.512ded7b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/177.240594e6.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/178.fb06697a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/179.985cf920.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/18.bfbab2f5.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/180.a2bf1559.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/181.ad643c60.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/182.6a86fd13.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/183.4bdd985c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/184.f736054d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/185.4e11e4ca.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/186.36c43a3b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/187.34cf573f.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/188.ee4b1840.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/189.7590c26d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/19.fc24c798.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/190.9df6e7da.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/191.e55bfc5e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/192.1272b3be.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/193.1e923a54.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/20.6d5b5a67.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/21.dfda3fd0.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/22.d5d29211.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/23.94d21a3a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/24.7ea7a0f4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/25.3cc233a3.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/26.02cde8c1.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/27.426d0a37.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/28.9a8e6388.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/29.31efb461.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/30.8c07bd6b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/31.e4a610c4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/32.f54f6f68.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/33.caf66eb2.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/34.62c5d18b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/35.f40dee00.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/36.9c5fbaa5.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/37.3888f1e6.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/38.cc7e0d00.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/39.456ce901.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/40.c2dd678d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/41.6f6ba694.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/42.6f0fee02.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/43.8b585e93.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/44.5eee52f3.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/45.89461dd9.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/46.fe301695.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/47.d1b8b9ef.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/48.ad5e6588.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/49.1520b73e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/5.b9e0dfbd.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/50.41f4cc9a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/51.4bf153c8.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/52.8861f0fb.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/53.76a2bc89.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/54.7cb19805.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/55.fa69870f.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/56.989aa9d8.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/57.981dbc79.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/59.ec3ba878.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/6.e23ae425.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/60.602f98e2.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/61.78148690.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/62.c8a9c48d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/63.fef5094b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/64.1327ecd8.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/65.a866bd56.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/66.44e9f9b8.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/67.ddd45bda.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/68.ebf6a6e5.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/69.1086b17d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/7.e13b578d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/70.82ae9c14.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/71.b7d17679.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/72.6d76e435.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/73.f6726a49.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/74.47fa8b8d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/75.0ac3a091.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/76.0322bbb4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/77.fc2cb63f.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/78.a05709bd.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/79.3ca99c51.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/80.ec7ebc9c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/81.43af823d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/82.c90aeb40.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/83.d8879477.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/84.9caa0b08.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/85.f7c6683a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/86.5e143a76.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/87.f9c5d0f1.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/88.c47a4e0f.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/89.6987bfa1.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/90.7e164009.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/91.ce52a439.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/92.8cd2f6a7.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/93.abd3e0ed.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/94.5828eba4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/95.f7a37854.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/96.e01bcd40.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/97.5e7ae40a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/98.0bed3fe7.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/99.c412bfa6.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/vendors~docsearch.e27ff01b.js">
+    <link rel="stylesheet" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/css/0.styles.87f66710.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/cs_knowledge_base_vuepress_vdoing_publish/" class="home-link router-link-active"><img src="/cs_knowledge_base_vuepress_vdoing_publish/img/EB-logo.png" alt="一亩三分地" class="logo"> <span class="site-name can-hide">一亩三分地</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/cs_knowledge_base_vuepress_vdoing_publish/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/2264e8/" class="nav-link">JavaScript</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/802a1ca6f7b71c59/" class="nav-link">Vue</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/javascript/" class="nav-link">《JavaScript教程》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/es6/" class="nav-link">《ES6 教程》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/vue/" class="nav-link">《Vue》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/wx-miniprogram/" class="nav-link">小程序笔记</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="原理" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/theory/" class="link-title">原理</a> <span class="title" style="display:none;">原理</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/ae99f1/" class="nav-link">连接池</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="开源" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/opensource/" class="link-title">开源</a> <span class="title" style="display:none;">开源</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/3ed8ea/" class="nav-link">learnbydo</a></li></ul></div></div> <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><!----> <nav class="nav-links"><div class="nav-item"><a href="/cs_knowledge_base_vuepress_vdoing_publish/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/2264e8/" class="nav-link">JavaScript</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/802a1ca6f7b71c59/" class="nav-link">Vue</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/javascript/" class="nav-link">《JavaScript教程》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/es6/" class="nav-link">《ES6 教程》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/vue/" class="nav-link">《Vue》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/wx-miniprogram/" class="nav-link">小程序笔记</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="原理" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/theory/" class="link-title">原理</a> <span class="title" style="display:none;">原理</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/ae99f1/" class="nav-link">连接池</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="开源" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/opensource/" class="link-title">开源</a> <span class="title" style="display:none;">开源</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/3ed8ea/" class="nav-link">learnbydo</a></li></ul></div></div> <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>JavaScript文章</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/2264e8/" class="sidebar-link">ES6迭代器和生成器</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/" aria-current="page" class="active sidebar-link">ES6Promise和await原理</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level2"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#前言" class="sidebar-link">前言</a></li><li class="sidebar-sub-header level2"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_1-早期异步代码困境" class="sidebar-link">1\. 早期异步代码困境</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_1-1-大聪明做法" class="sidebar-link">1.1 大聪明做法</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_2-1-早期正确做法" class="sidebar-link">2.1 早期正确做法</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_2-promise" class="sidebar-link">2\. Promise</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_2-1-executor立即执行" class="sidebar-link">2.1 Executor立即执行</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_2-2-requestdata-重构" class="sidebar-link">2.2 requestData 重构</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_2-3-promise的状态" class="sidebar-link">2.3 promise的状态</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_2-4-resolve不同值的区别" class="sidebar-link">2.4 resolve不同值的区别</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_2-5-promise的实例方法" class="sidebar-link">2.5 Promise的实例方法</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_2-6-promise中的类方法-静态方法" class="sidebar-link">2.6 Promise中的类方法/静态方法</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_3-promise的回调地狱-进阶" class="sidebar-link">3\. Promise的回调地狱 (进阶)</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_3-1-卧龙解法" class="sidebar-link">3.1 卧龙解法</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_3-2-凤雏解法" class="sidebar-link">3.2 凤雏解法</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_3-3-生成器-promise解法" class="sidebar-link">3.3 生成器+Promise解法</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_3-4-自动化执行函数封装" class="sidebar-link">3.4 自动化执行函数封装</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_3-5-最终解决回调地狱的办法" class="sidebar-link">3.5 最终解决回调地狱的办法</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_4-async-await-剖析" class="sidebar-link">4\. async/await 剖析</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_4-1-async内部代码同步执行" class="sidebar-link">4.1 async内部代码同步执行</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_4-2-异步函数的返回值" class="sidebar-link">4.2 异步函数的返回值</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_4-3-异步函数的异常处理" class="sidebar-link">4.3 异步函数的异常处理</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_4-4-await-关键字" class="sidebar-link">4.4 await 关键字</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/272b1a/#_5-结语" class="sidebar-link">5\. 结语</a></li></ul></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/1f4123be6f45abcd/" class="sidebar-link">ES6面向对象</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e808fba1fa8fbab2/" class="sidebar-link">多种数组去重性能对比</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/40b4db2d38ba85f2/" class="sidebar-link">JS随机打乱数组</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/40f623be692cf8bc/" class="sidebar-link">判断是否为移动端浏览器</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/f1acb712033ac8da/" class="sidebar-link">将一维数组按指定长度转为二维数组</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/0f6a0ac99b62ede5/" class="sidebar-link">防抖与节流函数</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/7a91be2d502346ce/" class="sidebar-link">JS获取和修改url参数</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/fd4a16d56b83c1bc/" class="sidebar-link">比typeof运算符更准确的类型判断</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/a2f4d6/" class="sidebar-link">js函数式编程好书</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/d386de/" class="sidebar-link">js代码片段</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/105f71/" class="sidebar-link">nodejs代码片段</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/4ae4c4/" class="sidebar-link">js之reduce函数用途</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/af9de3/" class="sidebar-link">js继承及原型链原理理解</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Vue文章</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>TypeScript</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>学习笔记</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>element-plus</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>codewars</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>react</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>realworld</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>翻译</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-057748f7><div class="articleInfo" data-v-057748f7><ul class="breadcrumbs" data-v-057748f7><li data-v-057748f7><a href="/cs_knowledge_base_vuepress_vdoing_publish/" title="首页" class="iconfont icon-home router-link-active" data-v-057748f7></a></li> <li data-v-057748f7><a href="/cs_knowledge_base_vuepress_vdoing_publish/web/#前端" data-v-057748f7>前端</a></li><li data-v-057748f7><a href="/cs_knowledge_base_vuepress_vdoing_publish/web/#JavaScript文章" data-v-057748f7>JavaScript文章</a></li></ul> <div class="info" data-v-057748f7><!----> <div title="创建时间" class="date iconfont icon-riqi" data-v-057748f7><a href="javascript:;" data-v-057748f7>2024-11-12</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABGpJREFUSA3tVVtoXFUU3fvOI53UlmCaKIFmwEhsE7QK0ipFEdHEKpXaZGrp15SINsXUWvBDpBgQRKi0+KKoFeJHfZA+ED9KKoIU2gYD9UejTW4rVIzm0VSTziPzuNu1z507dibTTjL4U/DAzLn3nL3X2o91ziX6f9wMFdh6Jvbm9nNSV0msViVO6tN1Rm7NMu2OpeJ9lWBUTDxrJbYTS0hInuwciu9eLHlFxCLCZEk3MegsJmZ5K/JD6t7FkFdEvGUo1g7qJoG3MHImqRIn8/nzY1K9UPKKiJmtnUqHVE3Gbuay6vJE/N2FEmuxFjW2nUuE0yQXRRxLiTUAzs36zhZvOXJPdX850EVnnLZkB8prodQoM5JGj7Xk2mvC7JB8tG04Ef5PiXtG0UtxupRQSfTnBoCy554x18yJHI6I+G5Eru4LHmPJZEQsrvPUbMiA8G/WgMK7w7I+ez7++o2ANfbrjvaOl1tFMs+htG3IrZH9/hDX1Pr8Tc0UvH8tcX29KzAgIGcEkINyW5BF9x891hw6VYqgJHEk0huccS7vh3C6gTiODL+26huuBtbct8eZnqLML8PkxGYpuPZBqtqwkSjgc4mB5gbgig5i+y0UDK35LMxXisn9xQtK+nd26gTIHsHe/oblK/b29fUmN/8Y+9jAQrnBp56m1LcDlDp9irKTExSKduXJVWSqdBMA08pEJnEIOB3FPPMybu/oeV8zFeYN3xx576Q6RH+VmplE4ncQV5v+5rzSoyOU7PuEAg8g803PwBJ0CExno/jcMbN8tONYeOmHiuUNryvm3fRUy4tMPVLdAGkUhNWuggGrJcXPv+ouCjz0MKUHz1J2/E8IC9nqTabcxgaBYM0hPhD5Y65FsbxRQKxCQrDjDctW7PUM3HuZunFyifSAqEfuzCp48Il24luWUWZoyJCaPR82jE0+kFA643wRFVni4RYSq3ohJO2pZ7B5dO4xkDWbEpossJPLSrPjYID8rS2UHTlvyNxqIGsg674XJJ7vnh5L7PNwC4hh2sjCI96mzszOTpxLF0T7l88Yz7lAuK6OnL8gXLOnTvpzSb22YG8W7us3jSebFHeeqnXRG1vt+MoUM84LQIBmMsCTAcOauTh0T0l0neQK7m2bLMt2mGxU3HYssS0J2cdv5wljlPsrIuZLAG/2DOZIXgCYT8uMGZN+e2kSirfxZOPCsC0f24nTZzspnVn9VePS1Z5vubmAGGXG8ZFno9Hel0yfA5ZPhF7Dh972BQJ2qCpgH67lmWtBYbvk6sz02wjky2vXyz0XErP/kFB619js1BtwfOV4OPRqOQBjy3Qbk18vigUPPSD5ceHnwck7W9bhAqZdd7SuG7w4/P2F/GaJh8c7e9qgow+Q7cGBo+98WsLkuktFqiZabtXuQTu/Y5ETbR0v7tNSFnvrmu6pjdoan2KjMu8q/Hmj1EfCO2ZGfEIbIXKUlw8qaX9/b2oeSJmFksSeT/Fn0V3nSypChh4Gjh74ybO9aeZ/AN2dwciu2/MhAAAAAElFTkSuQmCC">ES6Promise和await原理<!----></h1> <!----> <div class="theme-vdoing-content content__default"><h2 id="前言"><a href="#前言" class="header-anchor">#</a> 前言</h2> <blockquote><p>在日常开发中，我们与经常与 promise 打交道，因为在日常业务开发中，请求 API、WS、各种异步的回调都需要用 promise 来处理</p></blockquote> <h2 id="_1-早期异步代码困境"><a href="#_1-早期异步代码困境" class="header-anchor">#</a> 1. 早期异步代码困境</h2> <ul><li>众所周知，js是单线程的，耗时操作都是交给浏览器来处理，等时间到了从队列中取出执行，设计到事件循环的概念，笔者也分享过，可以看以下，理解了可以更好的理解<code>promise</code>。</li> <li>我以一个需求为切入点，我模拟网络请求(异步操作)
+<ul><li>如果网络请求成功了，你告知我成功了</li> <li>如果网络请求失败了，你告知我失败了</li></ul></li></ul> <h3 id="_1-1-大聪明做法"><a href="#_1-1-大聪明做法" class="header-anchor">#</a> 1.1 大聪明做法</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>function requestData(url) {
+  setTimeout(() =&gt; {
+    if (url === 'iceweb.io') {
+      return '请求成功'
+    }
+    return '请求失败'
+  }, 3000)
+}
+
+const result = requestData('iceweb.io')
+
+console.log(result) //undefined
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><ul><li>首先你要理解<code>js</code>代码的执行顺序，而不是是想当然的，代码其实并不是按照你书写的顺序执行的。</li> <li>那么为什么是 <code>undefined呢</code>？
+<ul><li>首先当我执行<code>requestData</code>函数，开始执行函数。遇到了异步操作不会阻塞后面代码执行的，因为js是单线程的，所以你写的<code>return</code>成功或者失败并没有返回给<code>requestData</code>，那我这个函数中，抛开异步操作，里面并没有返回值，所以值为<code>undefined</code>。</li></ul></li></ul> <h3 id="_2-1-早期正确做法"><a href="#_2-1-早期正确做法" class="header-anchor">#</a> 2.1 早期正确做法</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>function requestData(url, successCB, failureCB) {
+  setTimeout(() =&gt; {
+    if (url === 'iceweb.io') {
+      successCB('我成功了,把获取到的数据传出去', [{name:'ice', age:22}])
+    } else {
+      failureCB('url错误，请求失败')
+    }
+  }, 3000)
+}
+
+//3s后 回调successCB 
+//我成功了,把获取到的数据传出去 [ { name: 'ice', age: 22 } ]
+requestData('iceweb.io', (res, data) =&gt; console.log(res, data), rej =&gt; console.log(rej))
+
+//3s后回调failureCB
+//url错误，请求失败
+requestData('icexxx.io', res =&gt; console.log(res) ,rej =&gt; console.log(rej))
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><ul><li>早期解决方案都是传入两个回调，一个失败的，一个成功的。那很多开发者会问这不是挺好的吗？挺简单的，js中函数是一等公民，可以传来传去，但是这样太灵活了，没有规范。</li> <li>如果使用的是框架，还要阅读一下框架源码，正确失败的传实参的顺序，如果传参顺序错误这样是非常危险的。</li></ul> <h2 id="_2-promise"><a href="#_2-promise" class="header-anchor">#</a> 2. Promise</h2> <ul><li><code>Promise</code>(承诺)，给予调用者一个承诺，过一会返回数据给你，就可以创建一个promise对象</li> <li>当我们<code>new</code>一个<code>promise</code>，此时我们需要传递一个回调函数，这个函数为立即执行的，称之为（executor）</li> <li>这个回调函数，我们需要传入两个参数回调函数，<code>reslove</code>,<code>reject</code>(函数可以进行传参)
+<ul><li>当执行了<code>reslove</code>函数，会回调promise对象的.then函数</li> <li>当执行了<code>reject</code>函数，会回调promise对象的.catche函数</li></ul></li></ul> <h3 id="_2-1-executor立即执行"><a href="#_2-1-executor立即执行" class="header-anchor">#</a> 2.1 Executor立即执行</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>new Promise((resolve, reject) =&gt; {
+  console.log(`executor 立即执行`)
+})
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><ul><li>传入的<code>executor</code>是立即执行的</li></ul> <h3 id="_2-2-requestdata-重构"><a href="#_2-2-requestdata-重构" class="header-anchor">#</a> 2.2 requestData 重构</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>function requestData(url) {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      if (url === 'iceweb.io') {
+        //只能传递一个参数
+        resolve('我成功了,把获取到的数据传出去')
+      } else {
+        reject('url错误，请求失败')
+      }
+    }, 3000)    
+  })
+}
+
+//1. 请求成功
+requestData('iceweb.io').then(res =&gt; {
+  //我成功了,把获取到的数据传出去
+  console.log(res)
+})
+
+//2. 请求失败
+
+//2.2 第一种写法
+//url错误，请求失败
+requestData('iceweb.org').then(res =&gt; {},rej =&gt; console.log(rej))
+
+//2.2 第二种写法
+//url错误，请求失败
+requestData('iceweb.org').catch(e =&gt; console.log(e))
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br></div></div><ul><li>在函数中，new这个类的时候，传入的回调函数称之为<code>executor</code>（会被Promise类中自动执行）</li> <li>在正确的时候调用<code>resolve</code>函数，失败的时候调用<code>reject</code>函数，把需要的参数传递出去。</li> <li>异常处理
+<ul><li>其中在<code>.then</code>方法中可以传入两个回调，您也可以查看<a href="https://link.juejin.cn/?target=https%3A%2F%2Fpromisesaplus.com%2F" title="https://promisesaplus.com/" target="_blank" rel="noopener noreferrer">Promise/A+<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>规范
+<ul><li>第一个则是<code>fulfilled</code>的回调</li> <li>第二个则是<code>rejected</code>的回调</li></ul></li></ul></li> <li>那这样有什么好处呢？ 看起来比早期处理的方案还要繁琐呢?
+<ol><li>统一规范，可以增强阅读性和扩展性</li> <li>小幅度减少回调地狱</li></ol></li></ul> <h3 id="_2-3-promise的状态"><a href="#_2-3-promise的状态" class="header-anchor">#</a> 2.3 promise的状态</h3> <ul><li>首先先给大家举个栗子，把代码抽象为现实的栗子
+<ul><li>你答应你女朋友，下周末带她去吃好吃的 (还未到下周末，此时状态为<strong>待定状态</strong>)</li> <li>时间飞快，今天就是周末了，你和你女友一起吃了烤肉、甜点、奶茶...（<strong>已兑现状态</strong>）</li> <li>时间飞快，今天就是周末了，正打算出门。不巧产品经理，因为线上出现的紧急问题，需要回公司解决一下，你(为了生活)只能委婉的拒绝一下女友，并且说明一下缘由(<strong>已拒绝状态</strong>)</li></ul></li> <li>使用<code>promise</code>的时候，给它一个承诺，我们可以将他划分为三个阶段
+<ul><li>pending(待定)，执行了executor，状态还在等待中，没有被兑现，也没有被拒绝</li> <li>fulfilled(已兑现)，执行了<code>resolve</code>函数则代表了已兑现状态</li> <li>rejected(已拒绝)，执行了<code>reject</code>函数则代表了已拒绝状态</li></ul></li> <li>首先，状态只要从待定状态，变为其他状态，则状态不能再改变</li></ul> <p>思考以下代码:</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    reject('失败')
+    resolve('成功')
+  }, 3000);
+})
+
+promise.then(res =&gt; console.log(res)).catch(err =&gt; console.log(err))
+
+//失败 
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><ul><li>当我调用<code>reject</code>之后，在调用<code>resolve</code>是无效的，因为状态已经发生改变，并且是不可逆的。</li></ul> <h3 id="_2-4-resolve不同值的区别"><a href="#_2-4-resolve不同值的区别" class="header-anchor">#</a> 2.4 resolve不同值的区别</h3> <ul><li>如果<code>resolve</code>传入一个普通的值或者对象，<strong>只能传递接受一个参数</strong>，那么这个值会作为<code>then</code>回调的参数</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise = new Promise((resolve, reject) =&gt; {
+  resolve({name: 'ice', age: 22})
+})
+
+promise.then(res =&gt; console.log(res))
+
+// {name: 'ice', age: 22}
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><ul><li>如果<code>resolve</code>中传入的是另外一个<code>Promise</code>，那么这个新<code>Promise</code>会决定原<code>Promise</code>的状态</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise = new Promise((resolve, reject) =&gt; {
+  resolve(new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      resolve('ice')
+    }, 3000);
+  }))
+})
+
+promise.then(res =&gt; console.log(res))
+
+//3s后 ice
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><ul><li>如果<code>resolve</code>中传入的是一个对象，并且这个对象有实现<code>then</code>方法，那么会执行该<code>then</code>方法，<code>then</code>方法会传入<code>resolve</code>，<code>reject</code>函数。此时的<code>promise</code>状态取决于你调用了<code>resolve</code>，还是<code>reject</code>函数。这种模式也称之为: <strong>thenable</strong></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise = new Promise((resolve, reject) =&gt; {
+  resolve({
+    then(res, rej) {
+      res('hi ice')
+    }
+  })
+})
+
+promise.then(res =&gt; console.log(res))
+
+// hi ice
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><h3 id="_2-5-promise的实例方法"><a href="#_2-5-promise的实例方法" class="header-anchor">#</a> 2.5 Promise的实例方法</h3> <ul><li>实例方法，存放在<code>Promise.prototype</code>上的方法，也就是Promise的显示原型上，当我new Promise的时候，会把返回的改对象的 promise[[prototype]]（隐式原型） === Promise.prototype (显示原型)</li> <li>即new返回的对象的隐式原型指向了Promise的显示原型</li></ul> <h4 id="_2-5-1-then方法"><a href="#_2-5-1-then方法" class="header-anchor">#</a> 2.5.1 then方法</h4> <h5 id="_2-5-1-1-then的参数"><a href="#_2-5-1-1-then的参数" class="header-anchor">#</a> 2.5.1.1 then的参数</h5> <ul><li><code>then</code>方法可以接受参数，一个参数为成功的回调，另一个参数为失败的回调，前面重构<code>requestData</code>中有演练过。</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise = new Promise((resolve, reject) =&gt; {
+  resolve('request success')
+  // reject('request error')
+})
+
+promise.then(res =&gt; console.log(res), rej =&gt; console.log(rej))
+
+//request success
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><ul><li>如果只捕获错误，还可以这样写
+<ul><li>因为第二个参数是捕获异常的，第一个可以写个<code>null</code>或<code>&quot;&quot;</code>占位</li></ul></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise = new Promise((resolve, reject) =&gt; {
+  // resolve('request success')
+  reject('request error')
+})
+
+promise.then(null, rej =&gt; console.log(rej))
+
+//request error
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><h5 id="_2-5-1-2-then的多次调用"><a href="#_2-5-1-2-then的多次调用" class="header-anchor">#</a> 2.5.1.2 then的多次调用</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise = new Promise((resolve, reject) =&gt; {
+  resolve('hi ice')
+})
+
+promise.then(res =&gt; console.log(res))
+promise.then(res =&gt; console.log(res))
+promise.then(res =&gt; console.log(res))
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><ul><li>调用多次则会执行多次</li></ul> <h5 id="_2-5-1-3-then的返回值"><a href="#_2-5-1-3-then的返回值" class="header-anchor">#</a> 2.5.1.3 then的返回值</h5> <ul><li><code>then</code>方法是有返回值的，它的返回值是<code>promise</code>，但是是<code>promise</code>那它的状态如何决定呢？接下来让我们一探究竟。</li></ul> <h6 id="_2-5-1-3-1-返回一个普通值-状态-fulfilled"><a href="#_2-5-1-3-1-返回一个普通值-状态-fulfilled" class="header-anchor">#</a> 2.5.1.3.1 返回一个普通值 <em><strong>状态:fulfilled</strong></em></h6> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise = new Promise((resolve, reject) =&gt; {
+  resolve('hi ice')
+})
+
+promise.then(res =&gt; ({name:'ice', age:22}))
+       .then(res =&gt; console.log(res))
+       
+//{name:'ice', age:22}
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><ul><li>返回一个普通值，则相当于主动调用<code>Promise.resolve</code>，并且把返回值作为实参传递到<code>then</code>方法中。</li> <li>如果没有返回值，则相当于返回<code>undefined</code></li></ul> <h6 id="_2-5-1-3-2-明确返回一个promise-状态-fulfilled"><a href="#_2-5-1-3-2-明确返回一个promise-状态-fulfilled" class="header-anchor">#</a> 2.5.1.3.2 明确返回一个promise <em><strong>状态:fulfilled</strong></em></h6> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise = new Promise((resolve, reject) =&gt; {
+  resolve('hi ice')
+})
+
+promise.then(res =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    resolve('then 的返回值')
+  })
+}).then(res =&gt; console.log(res))
+
+//then 的返回值
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><ul><li>主动返回一个<code>promise</code>对象，状态和你调用<code>resolve</code>，还是<code>reject</code>有关</li></ul> <h6 id="_2-5-1-3-3-返回一个thenable对象-状态-fulfilled"><a href="#_2-5-1-3-3-返回一个thenable对象-状态-fulfilled" class="header-anchor">#</a> 2.5.1.3.3 返回一个thenable对象 <em><strong>状态：fulfilled</strong></em></h6> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise = new Promise((resolve, reject) =&gt; {
+  resolve('hi ice')
+})
+
+promise.then(res =&gt; {
+  return {
+    then(resolve, reject) {
+      resolve('hi webice')
+    }
+  }
+}).then(res =&gt; console.log(res))
+
+//hi webice
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><ul><li>返回了一个thenable对象，其状态取决于你是调用了<code>resolve</code>,还是<code>reject</code></li></ul> <h4 id="_2-5-2-catch方法"><a href="#_2-5-2-catch方法" class="header-anchor">#</a> 2.5.2 catch方法</h4> <h5 id="_2-5-2-1-catch的多次调用"><a href="#_2-5-2-1-catch的多次调用" class="header-anchor">#</a> 2.5.2.1 catch的多次调用</h5> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise = new Promise((resolve, reject) =&gt; {
+  reject('ice error')
+})
+
+promise.catch(err =&gt; console.log(err))
+promise.catch(err =&gt; console.log(err))
+promise.catch(err =&gt; console.log(err))
+
+//ice error
+//ice error
+//ice error
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><h5 id="_2-5-2-2-catch的返回值"><a href="#_2-5-2-2-catch的返回值" class="header-anchor">#</a> 2.5.2.2 catch的返回值</h5> <ul><li>catch方法是有返回值的，它的返回值是promise，但是是promise那它的状态如何决定呢？接下来让我们一探究竟。</li> <li>如果返回值明确一个promise或者thenable对象，取决于你调用了<code>resolve</code>还是<code>reject</code></li></ul> <h6 id="_2-5-2-2-1-返回一个普通对象"><a href="#_2-5-2-2-1-返回一个普通对象" class="header-anchor">#</a> 2.5.2.2.1 返回一个普通对象</h6> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise = new Promise((resolve, reject) =&gt; {
+  reject('ice error')
+})
+
+promise.catch(err =&gt; ({name:'ice', age: 22})).then(res =&gt; console.log(res))
+
+//{name:'ice', age: 22}
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h6 id="_2-5-2-2-2-明确返回一个promise"><a href="#_2-5-2-2-2-明确返回一个promise" class="header-anchor">#</a> 2.5.2.2.2 明确返回一个promise</h6> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise = new Promise((resolve, reject) =&gt; {
+  reject('ice error')
+})
+
+promise.catch(err =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    reject('ice error promise')
+  })
+}).catch(res =&gt; console.log(res))
+
+//ice error promise
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><ul><li>此时<code>new Promise()</code> 调用了<code>reject</code>函数，则会被<code>catch</code>捕获到</li></ul> <h6 id="_2-5-2-2-3-返回thenable对象"><a href="#_2-5-2-2-3-返回thenable对象" class="header-anchor">#</a> 2.5.2.2.3 返回thenable对象</h6> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise = new Promise((resolve, reject) =&gt; {
+  reject('ice error')
+})
+
+promise.catch(err =&gt; {
+  return {
+    then(resolve, reject) {
+      reject('ice error then')
+    }
+  }
+}).catch(res =&gt; console.log(res))
+
+//ice error then
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h4 id="_2-5-3-finally方法"><a href="#_2-5-3-finally方法" class="header-anchor">#</a> 2.5.3 finally方法</h4> <ul><li>ES9（2018）新实例方法</li> <li>finally(最后)，无论promise状态是fulfilled还是rejected都会执行一次<code>finally</code>方法</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise = new Promise((resolve, reject) =&gt; {
+  resolve('hi ice')
+})
+
+promise.then(res =&gt; console.log(res)).finally(() =&gt; console.log('finally execute'))
+
+//finally execute
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="_2-6-promise中的类方法-静态方法"><a href="#_2-6-promise中的类方法-静态方法" class="header-anchor">#</a> 2.6 Promise中的类方法/静态方法</h3> <h4 id="_2-6-1-promise-reslove"><a href="#_2-6-1-promise-reslove" class="header-anchor">#</a> 2.6.1 Promise.reslove</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>Promise.resolve('ice')
+//等价于
+new Promise((resolve, reject) =&gt; resolve('ice'))
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><ul><li>有的时候，你已经预知了状态的结果为fulfilled，则可以用这种简写方式</li></ul> <h4 id="_2-6-2-promise-reject"><a href="#_2-6-2-promise-reject" class="header-anchor">#</a> 2.6.2 Promise.reject</h4> <div class="language- line-numbers-mode"><pre class="language-text"><code>Promise.reject('ice error')
+//等价于
+new Promise((resolve, reject) =&gt; reject('ice error'))
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><ul><li>有的时候，你已经预知了状态的结果为rejected，则可以用这种简写方式</li></ul> <h4 id="_2-6-3-promise-all"><a href="#_2-6-3-promise-all" class="header-anchor">#</a> 2.6.3 Promise.all</h4> <p><strong>fulfilled 状态</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise1 = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    resolve('hi ice')
+  }, 1000);
+})
+
+const promise2 = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    resolve('hi panda')
+  }, 2000);
+})
+
+const promise3 = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    resolve('hi grizzly')
+  }, 3000);
+})
+
+Promise.all([promise1, promise2, promise3]).then(res =&gt; console.log(res))
+
+//[ 'hi ice', 'hi panda', 'hi grizzly' ]
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div></div><ul><li>all方法的参数传入为一个可迭代对象，返回一个promise，只有三个都为<code>resolve</code>状态的时候才会调用<code>.then</code>方法。</li> <li>只要有一个promise的状态为rejected，则会回调<code>.catch</code>方法</li></ul> <p><strong>rejected状态</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise1 = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    resolve('hi ice')
+  }, 1000);
+})
+
+const promise2 = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    reject('hi panda')
+  }, 2000);
+})
+
+const promise3 = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    resolve('hi grizzly')
+  }, 3000);
+})
+
+Promise.all([promise1, promise2, promise3]).then(res =&gt; console.log(res)).catch(err =&gt; console.log(err))
+
+//hi panda
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div></div><ul><li>当遇到rejectd的时候，后续的promise结果我们是获取不到，并且会把reject的实参，传递给catch的err形参中</li></ul> <h4 id="_2-6-4-promise-allsettled"><a href="#_2-6-4-promise-allsettled" class="header-anchor">#</a> 2.6.4 Promise.allSettled</h4> <ul><li>上面的<code>Promise.all</code>有一个缺陷，就是当遇到一个rejected的状态，那么对于后面是<code>resolve</code>或者<code>reject</code>的结果我们是拿不到的</li> <li>ES11 新增语法<code>Promise.allSettled</code>，无论状态是fulfilled/rejected都会把参数返回给我们</li></ul> <hr> <p><strong>所有promise都有结果</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise1 = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    reject('hi ice')
+  }, 1000);
+})
+
+const promise2 = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    resolve('hi panda')
+  }, 2000);
+})
+
+const promise3 = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    reject('hi grizzly')
+  }, 3000);
+})
+
+Promise.allSettled([promise1, promise2, promise3]).then(res =&gt; console.log(res))
+
+/* [
+  { status: 'rejected', reason: 'hi ice' },
+  { status: 'fulfilled', value: 'hi panda' },
+  { status: 'rejected', reason: 'hi grizzly' }
+] */
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br></div></div><ul><li>该方法会在所有的Promise都有结果，无论是fulfilled，还是rejected，才会有最终的结果</li></ul> <p><strong>其中一个promise没有结果</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise1 = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    reject('hi ice')
+  }, 1000);
+})
+
+const promise2 = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    resolve('hi panda')
+  }, 2000);
+})
+
+const promise3 = new Promise((resolve, reject) =&gt; {})
+
+Promise.allSettled([promise1, promise2, promise3]).then(res =&gt; console.log(res))
+// 什么都不打印
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><ul><li>其中一个promise没有结果，则什么都结果都拿不到</li></ul> <h4 id="_2-6-5-promise-race"><a href="#_2-6-5-promise-race" class="header-anchor">#</a> 2.6.5 Promise.race</h4> <ul><li>race(竞争竞赛)</li> <li>优先获取第一个返回的结果，无论结果是fulfilled还是rejectd</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise1 = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    reject('hi error')
+  }, 1000);
+})
+
+const promise2 = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    resolve('hi panda')
+  }, 2000);
+})
+
+Promise.race([promise1, promise2])
+       .then(res =&gt; console.log(res))
+       .catch(e =&gt; console.log(e))
+       
+//hi error
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><h4 id="_2-6-6-promise-any"><a href="#_2-6-6-promise-any" class="header-anchor">#</a> 2.6.6 Promise.any</h4> <ul><li>与race类似，只获取第一个状态为fulfilled，如果全部为rejected则报错<code>AggregateError</code></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>const promise1 = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    reject('hi error')
+  }, 1000);
+})
+
+const promise2 = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    resolve('hi panda')
+  }, 2000);
+})
+
+Promise.any([promise1, promise2])
+       .then(res =&gt; console.log(res))
+       .catch(e =&gt; console.log(e))
+       
+//hi panda
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><h2 id="_3-promise的回调地狱-进阶"><a href="#_3-promise的回调地狱-进阶" class="header-anchor">#</a> 3. Promise的回调地狱 (进阶)</h2> <ul><li>我还是以一个需求作为切入点，把知识点嚼碎了，一点一点喂进你们嘴里。
+<ul><li>当我发送网络请求的时候，需要拿到这次网络请求的数据，再发送网络请求，就这样重复三次，才能拿到我最终的结果。</li></ul></li></ul> <h3 id="_3-1-卧龙解法"><a href="#_3-1-卧龙解法" class="header-anchor">#</a> 3.1 卧龙解法</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>function requestData(url) {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      if (url.includes('iceweb')) {
+        resolve(url)
+      } else {
+        reject('请求错误')
+      }
+    }, 1000);
+  })
+}
+
+requestData('iceweb.io').then(res =&gt; {
+  requestData(`iceweb.org ${res}`).then(res =&gt; {
+    requestData(`iceweb.com ${res}`).then(res =&gt; {
+      console.log(res)
+    })
+  })
+})
+
+//iceweb.com iceweb.org iceweb.io
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div></div><ul><li>虽然能够实现，但是多层代码的嵌套，可读性非常差，我们把这种多层次代码嵌套称之为回调地狱</li></ul> <h3 id="_3-2-凤雏解法"><a href="#_3-2-凤雏解法" class="header-anchor">#</a> 3.2 凤雏解法</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>function requestData(url) {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      if (url.includes('iceweb')) {
+        resolve(url)
+      } else {
+        reject('请求错误')
+      }
+    }, 1000);
+  })
+}
+
+requestData('iceweb.io').then(res =&gt; {
+  return requestData(`iceweb.org ${res}`)
+}).then(res =&gt; {
+  return requestData(`iceweb.com ${res}`)
+}).then(res =&gt; {
+  console.log(res)
+})
+
+//iceweb.com iceweb.org iceweb.io
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div></div><ul><li>利用了then链式调用这一特性，返回了一个新的promise，但是不够优雅，思考一下能不能写成同步的方式呢？</li></ul> <h3 id="_3-3-生成器-promise解法"><a href="#_3-3-生成器-promise解法" class="header-anchor">#</a> 3.3 生成器+Promise解法</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>function requestData(url) {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      if (url.includes('iceweb')) {
+        resolve(url)
+      } else {
+        reject('请求错误')
+      }
+    }, 1000);
+  })
+}
+
+function* getData(url) {
+  const res1 = yield requestData(url)
+  const res2 = yield requestData(res1)
+  const res3 = yield requestData(res2)
+
+  console.log(res3)
+}
+
+const generator = getData('iceweb.io')
+
+generator.next().value.then(res1 =&gt; {
+  generator.next(`iceweb.org ${res1}`).value.then(res2 =&gt; {
+    generator.next(`iceweb.com ${res2}`).value.then(res3 =&gt; {
+      generator.next(res3)
+    })
+  })
+})
+
+//iceweb.com iceweb.org iceweb.io
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br></div></div><ul><li>大家可以发现我们的<code>getData</code>已经变为同步的形式，可以拿到我最终的结果了。那么很多同学会问，generator一直调用<code>.next</code>不是也产生了回调地狱吗？</li> <li>其实不用关心这个，我们可以发现它这个是有规律的，我们可以封装成一个自动化执行的函数，我们就不用关心内部是如何调用的了。</li></ul> <h3 id="_3-4-自动化执行函数封装"><a href="#_3-4-自动化执行函数封装" class="header-anchor">#</a> 3.4 自动化执行函数封装</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>function requestData(url) {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      if (url.includes('iceweb')) {
+        resolve(url)
+      } else {
+        reject('请求错误')
+      }
+    }, 1000);
+  })
+}
+
+function* getData() {
+  const res1 = yield requestData('iceweb.io')
+  const res2 = yield requestData(`iceweb.org ${res1}`)
+  const res3 = yield requestData(`iceweb.com ${res2}`)
+
+  console.log(res3)
+}
+
+//自动化执行 async await相当于自动帮我们执行.next
+function asyncAutomation(genFn) {
+  const generator = genFn()
+
+  const _automation = (result) =&gt; {
+    let nextData = generator.next(result)
+    if(nextData.done) return
+
+    nextData.value.then(res =&gt; {
+      _automation(res)
+    })
+  }
+
+  _automation()
+}
+
+asyncAutomation(getData)
+
+//iceweb.com iceweb.org iceweb.io
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br></div></div><ul><li>利用promise+生成器的方式变相实现解决回调地狱问题，其实就是<code>async await</code>的一个变种而已</li> <li>最早为<strong>TJ</strong>实现，<strong>前端大神人物</strong></li> <li>async await核心代码就类似这些，内部主动帮我们调用<code>.next</code>方法</li></ul> <h3 id="_3-5-最终解决回调地狱的办法"><a href="#_3-5-最终解决回调地狱的办法" class="header-anchor">#</a> 3.5 最终解决回调地狱的办法</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>function requestData(url) {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      if (url.includes('iceweb')) {
+        resolve(url)
+      } else {
+        reject('请求错误')
+      }
+    }, 1000);
+  })
+}
+
+async function getData() {
+  const res1 = await requestData('iceweb.io')
+  const res2 = await requestData(`iceweb.org ${res1}`)
+  const res3 = await requestData(`iceweb.com ${res2}`)
+
+  console.log(res3)
+}
+
+getData()
+
+//iceweb.com iceweb.org iceweb.io
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><ul><li>你会惊奇的发现，只要把<code>getData</code>生成器函数函数，改为<code>async</code>函数，<code>yeild</code>的关键字替换为<code>await</code>就可以实现异步代码同步写法了。</li></ul> <h2 id="_4-async-await-剖析"><a href="#_4-async-await-剖析" class="header-anchor">#</a> 4. async/await 剖析</h2> <ul><li>async（异步的）</li> <li>async 用于申明一个异步函数</li></ul> <h3 id="_4-1-async内部代码同步执行"><a href="#_4-1-async内部代码同步执行" class="header-anchor">#</a> 4.1 async内部代码同步执行</h3> <ul><li>异步函数的内部代码执行过程和普通的函数是一致的，默认情况下也是会被同步执行</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function sayHi() {
+  console.log('hi ice')
+}
+
+sayHi()
+
+//hi ice
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="_4-2-异步函数的返回值"><a href="#_4-2-异步函数的返回值" class="header-anchor">#</a> 4.2 异步函数的返回值</h3> <ul><li><p>异步函数的返回值和普通返回值有所区别</p> <ul><li>普通函数主动返回什么就返回什么，不返回为<code>undefined</code></li> <li>异步函数的返回值特点
+<ul><li>明确有返回一个普通值，相当于<code>Promise.resolve</code>(返回值)</li> <li>返回一个thenable对象则由，then方法中的<code>resolve</code>,或者<code>reject</code>有关</li> <li>明确返回一个promise，则由这个promise决定</li></ul></li></ul></li> <li><p>异步函数中可以使用<code>await</code>关键字，现在在全局也可以进行<code>await</code>，但是不推荐。会阻塞主进程的代码执行</p></li></ul> <h3 id="_4-3-异步函数的异常处理"><a href="#_4-3-异步函数的异常处理" class="header-anchor">#</a> 4.3 异步函数的异常处理</h3> <ul><li>如果函数内部中途发生错误，可以通过try catch的方式捕获异常</li> <li>如果函数内部中途发生错误，也可以通过函数的返回值.catch进行捕获</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>
+async function sayHi() {
+  console.log(res)
+}
+sayHi().catch(e =&gt; console.log(e))
+
+//或者
+
+async function sayHi() {
+  try {
+    console.log(res)
+  }catch(e) {
+    console.log(e)
+  }
+}
+
+sayHi()
+
+//ReferenceError: res is not defined
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><h3 id="_4-4-await-关键字"><a href="#_4-4-await-关键字" class="header-anchor">#</a> 4.4 await 关键字</h3> <ul><li>异步函数中可以使用<code>await</code>关键字，普通函数不行</li> <li>await特点
+<ul><li>通常await关键字后面都是跟一个Promise
+<ul><li>可以是普通值</li> <li>可以是thenable</li> <li>可以是Promise主动调用<code>resolve或者reject</code></li></ul></li> <li>这个promise状态变为fulfilled才会执行<code>await</code>后续的代码，所以<code>await</code>后面的代码，相当于包括在<code>.then</code>方法的回调中，如果状态变为rejected，你则需要在函数内部<code>try catch</code>，或者进行链式调用进行<code>.catch</code>操作</li></ul></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>function requestData(url) {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      if (url.includes('iceweb')) {
+        resolve(url)
+      } else {
+        reject('请求错误')
+      }
+    }, 1000);
+  })
+}
+
+async function getData() {
+  const res = await requestData('iceweb.io')
+  console.log(res)
+}
+
+getData()
+
+// iceweb.io
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><h2 id="_5-结语"><a href="#_5-结语" class="header-anchor">#</a> 5. 结语</h2> <ul><li>如果现在真的看不到未来是怎样，你就不如一直往前走，不知道什么时候天亮，去奔跑就好，跑着跑着天就亮了。</li></ul> <p>本文转自 <a href="https://juejin.cn/post/7144308012952322084" target="_blank" rel="noopener noreferrer">https://juejin.cn/post/7144308012952322084<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>，如有侵权，请联系删除。</p></div></div> <!----> <div class="page-edit"><div class="edit-link"><a href="https://github.com/xugaoyi/vuepress-theme-vdoing/edit/master/docs/01.前端/25.JavaScript文章/03.ES6Promise和await原理.md" target="_blank" rel="noopener noreferrer">编辑</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2024/12/04, 9:12:00</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/2264e8/" class="page-nav-centre page-nav-centre-prev"><div class="tooltip">ES6迭代器和生成器</div></a> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/1f4123be6f45abcd/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">ES6面向对象</div></a></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/2264e8/" class="prev">ES6迭代器和生成器</a></span> <span class="next"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/1f4123be6f45abcd/">ES6面向对象</a>→
+      </span></p></div></div></div> <!----></main></div> <div class="footer"><!----> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2024-2025
+    <span>kamiba | MIT License</span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"></div></div>
+    <script src="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/app.e20338f0.js" defer></script><script src="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/4.0a1770ce.js" defer></script><script src="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/3.5fe0b606.js" defer></script><script src="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/2.952c14e1.js" defer></script><script src="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/58.86f960f7.js" defer></script>
+  </body>
+</html>

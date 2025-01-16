@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>QEMU EDU 设备驱动 | 一亩三分地</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    <link rel="icon" href="/cs_knowledge_base_vuepress_vdoing_publish/img/favicon.ico">
+    <meta name="description" content="web前端技术博客,简洁至上,专注web前端学习与总结。JavaScript,js,ES6,TypeScript,vue,python,css3,html5,Node,git,github等技术文章。">
+    <meta name="keywords" content="前端博客,个人技术博客,前端,前端开发,前端框架,web前端,前端面试题,技术文档,学习,面试,JavaScript,js,ES6,TypeScript,vue,python,css3,html5,Node,git,github,markdown">
+    <meta name="theme-color" content="#11a8cd">
+    
+    <link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/css/0.styles.87f66710.css" as="style"><link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/app.e20338f0.js" as="script"><link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/4.0a1770ce.js" as="script"><link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/3.5fe0b606.js" as="script"><link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/2.952c14e1.js" as="script"><link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/184.f736054d.js" as="script"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/1.ffdd0f4a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/10.733b4090.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/100.8988fbda.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/101.0648c38a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/102.60c6fb35.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/103.333708e1.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/104.79d71a4e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/105.1be97b21.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/106.bae470ff.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/107.47f52ded.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/108.fe039118.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/109.b0f37852.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/11.6801ef91.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/110.7dac4dcb.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/111.28c49093.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/112.e1952b70.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/113.14305e5c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/114.e8b79fbe.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/115.6e64c2ab.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/116.f0dda052.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/117.2fabcdd5.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/118.e7fd60dd.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/119.33a436bc.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/12.25b88290.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/120.c29e52f4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/121.edaa5e84.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/122.16df3471.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/123.182c1ddd.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/124.d36d5cdb.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/125.0ebec260.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/126.63a047a2.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/127.4920c20c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/128.e5072b6c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/129.924ae959.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/13.72a3d56d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/130.6307f6eb.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/131.ba006b29.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/132.212757cb.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/133.f8f299d4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/134.094aa965.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/135.68b1b456.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/136.ebd4017b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/137.555e8267.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/138.209ed71d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/139.59d3ce91.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/14.00c4d42e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/140.3a035862.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/141.62553494.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/142.4f3f431c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/143.1cffd997.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/144.e535819c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/145.13e1c753.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/146.b770440e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/147.a19f0c9a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/148.0755e776.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/149.09382547.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/15.b49fb3dd.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/150.2f33a54e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/151.9a670809.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/152.a6e6a440.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/153.4f7f1998.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/154.c642bc59.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/155.5b0bbe6e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/156.b7b980ca.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/157.a824b65b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/158.c634a203.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/159.3cc46c68.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/16.cc7b110a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/160.8bc40058.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/161.6b33088e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/162.a21861c2.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/163.c43e66c9.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/164.74038262.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/165.449c3f8e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/166.ecb6064c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/167.93bebda4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/168.a9285a86.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/169.14628ce4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/17.dda61996.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/170.cb080ae3.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/171.3c6d8998.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/172.cf75a1ea.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/173.f66209c2.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/174.fbc96323.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/175.503a035b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/176.512ded7b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/177.240594e6.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/178.fb06697a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/179.985cf920.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/18.bfbab2f5.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/180.a2bf1559.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/181.ad643c60.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/182.6a86fd13.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/183.4bdd985c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/185.4e11e4ca.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/186.36c43a3b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/187.34cf573f.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/188.ee4b1840.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/189.7590c26d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/19.fc24c798.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/190.9df6e7da.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/191.e55bfc5e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/192.1272b3be.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/193.1e923a54.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/20.6d5b5a67.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/21.dfda3fd0.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/22.d5d29211.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/23.94d21a3a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/24.7ea7a0f4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/25.3cc233a3.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/26.02cde8c1.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/27.426d0a37.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/28.9a8e6388.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/29.31efb461.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/30.8c07bd6b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/31.e4a610c4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/32.f54f6f68.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/33.caf66eb2.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/34.62c5d18b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/35.f40dee00.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/36.9c5fbaa5.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/37.3888f1e6.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/38.cc7e0d00.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/39.456ce901.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/40.c2dd678d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/41.6f6ba694.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/42.6f0fee02.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/43.8b585e93.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/44.5eee52f3.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/45.89461dd9.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/46.fe301695.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/47.d1b8b9ef.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/48.ad5e6588.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/49.1520b73e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/5.b9e0dfbd.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/50.41f4cc9a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/51.4bf153c8.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/52.8861f0fb.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/53.76a2bc89.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/54.7cb19805.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/55.fa69870f.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/56.989aa9d8.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/57.981dbc79.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/58.86f960f7.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/59.ec3ba878.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/6.e23ae425.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/60.602f98e2.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/61.78148690.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/62.c8a9c48d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/63.fef5094b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/64.1327ecd8.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/65.a866bd56.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/66.44e9f9b8.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/67.ddd45bda.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/68.ebf6a6e5.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/69.1086b17d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/7.e13b578d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/70.82ae9c14.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/71.b7d17679.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/72.6d76e435.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/73.f6726a49.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/74.47fa8b8d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/75.0ac3a091.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/76.0322bbb4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/77.fc2cb63f.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/78.a05709bd.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/79.3ca99c51.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/80.ec7ebc9c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/81.43af823d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/82.c90aeb40.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/83.d8879477.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/84.9caa0b08.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/85.f7c6683a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/86.5e143a76.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/87.f9c5d0f1.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/88.c47a4e0f.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/89.6987bfa1.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/90.7e164009.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/91.ce52a439.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/92.8cd2f6a7.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/93.abd3e0ed.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/94.5828eba4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/95.f7a37854.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/96.e01bcd40.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/97.5e7ae40a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/98.0bed3fe7.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/99.c412bfa6.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/vendors~docsearch.e27ff01b.js">
+    <link rel="stylesheet" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/css/0.styles.87f66710.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/cs_knowledge_base_vuepress_vdoing_publish/" class="home-link router-link-active"><img src="/cs_knowledge_base_vuepress_vdoing_publish/img/EB-logo.png" alt="一亩三分地" class="logo"> <span class="site-name can-hide">一亩三分地</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/cs_knowledge_base_vuepress_vdoing_publish/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/2264e8/" class="nav-link">JavaScript</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/802a1ca6f7b71c59/" class="nav-link">Vue</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/javascript/" class="nav-link">《JavaScript教程》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/es6/" class="nav-link">《ES6 教程》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/vue/" class="nav-link">《Vue》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/wx-miniprogram/" class="nav-link">小程序笔记</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="原理" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/theory/" class="link-title">原理</a> <span class="title" style="display:none;">原理</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/ae99f1/" class="nav-link">连接池</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="开源" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/opensource/" class="link-title">开源</a> <span class="title" style="display:none;">开源</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/3ed8ea/" class="nav-link">learnbydo</a></li></ul></div></div> <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><!----> <nav class="nav-links"><div class="nav-item"><a href="/cs_knowledge_base_vuepress_vdoing_publish/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/2264e8/" class="nav-link">JavaScript</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/802a1ca6f7b71c59/" class="nav-link">Vue</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/javascript/" class="nav-link">《JavaScript教程》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/es6/" class="nav-link">《ES6 教程》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/vue/" class="nav-link">《Vue》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/wx-miniprogram/" class="nav-link">小程序笔记</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="原理" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/theory/" class="link-title">原理</a> <span class="title" style="display:none;">原理</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/ae99f1/" class="nav-link">连接池</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="开源" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/opensource/" class="link-title">开源</a> <span class="title" style="display:none;">开源</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/3ed8ea/" class="nav-link">learnbydo</a></li></ul></div></div> <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/3ed8ea/" class="sidebar-link">learnbydo</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/901800/" class="sidebar-link">手写解释器</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/c07b1f/" class="sidebar-link">一个神奇的工具readonlylink</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/de72a5/" class="sidebar-link">编程基本功之实现一个文件夹比较工具</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/950b35/" class="sidebar-link">接下来感兴趣要研究的一些开源项目</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/7c21c0/" class="sidebar-link">有趣的项目有趣的人</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/efa266/" class="sidebar-link">手写Spring和Springboot系列代码学习</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/96e23e/" class="sidebar-link">手写Vue3系列代码学习</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/d5edaf/" class="sidebar-link">一个比较好的前端技术总结知识库</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/caf8d1/" class="sidebar-link">一个比较好的技术书签</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/5d7a57/" class="sidebar-link">一个神奇的工具js2ts</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e6d731/" class="sidebar-link">数字电路学习工具DigitalLogicSim</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/81623e/" class="sidebar-link">build-your-own-x</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/a04608/" class="sidebar-link">hellogithub</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/0a1706/" class="sidebar-link">数据结构js极简实现</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/689282/" class="sidebar-link">js极其简单编译器</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/fd0855/" class="sidebar-link">js一行代码可以实现的功能1loc</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/91cdd8/" class="sidebar-link">js原生dom操作功能集合Mastering DOM manipulation with vanilla JavaScript</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/79ea22/" class="sidebar-link">LC-3Write your Own Virtual Machine</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/901a89/" class="sidebar-link">手把手1000行代码实现一个操作系统</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/d137b2/" class="sidebar-link">github搜索中国各个大学英文简称</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/473c34/" class="sidebar-link">实现一个cpu通过模拟逻辑门</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/" aria-current="page" class="active sidebar-link">QEMU EDU 设备驱动</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level2"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#qemu-启动" class="sidebar-link">QEMU 启动</a></li><li class="sidebar-sub-header level2"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#编写-pci-驱动程序" class="sidebar-link">编写 PCI 驱动程序</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#简单驱动模板" class="sidebar-link">简单驱动模板</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#注册驱动程序" class="sidebar-link">注册驱动程序</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#实现-probe-和-remove-函数" class="sidebar-link">实现 probe 和 remove 函数</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#用户空间交互" class="sidebar-link">用户空间交互</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#注册字符设备" class="sidebar-link">注册字符设备</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#实现文件操作" class="sidebar-link">实现文件操作</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#用户代码测试" class="sidebar-link">用户代码测试</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#中断处理" class="sidebar-link">中断处理</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#共享中断" class="sidebar-link">共享中断</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#等待队列" class="sidebar-link">等待队列</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#硬件设置" class="sidebar-link">硬件设置</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#使用-dma-传输数据" class="sidebar-link">使用 DMA 传输数据</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#设置传输参数" class="sidebar-link">设置传输参数</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#信号机制" class="sidebar-link">信号机制</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#中断上下文的坑" class="sidebar-link">中断上下文的坑</a></li><li class="sidebar-sub-header level3"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#测试代码" class="sidebar-link">测试代码</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e2c4a7/#进一步封装" class="sidebar-link">进一步封装</a></li></ul></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/1ec6f5/" class="sidebar-link">手写操作系统学习</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/e249ec/" class="sidebar-link">汇编语言教程</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/fcdd9c/" class="sidebar-link">更好的手写操作系统教程（sbi_and_riscv）</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/9e12f4/" class="sidebar-link">一个很好的开源nodejs教程</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/8d8e3a/" class="sidebar-link">一个很好的开源现代js教程翻译版</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/d9ec7d/" class="sidebar-link">比较好的c和cplus开源学习项目</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/99f981/" class="sidebar-link">java从头写一个webserver</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/d84443/" class="sidebar-link">一个强大的数据结构算法可视化开源项目</a></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-057748f7><div class="articleInfo" data-v-057748f7><ul class="breadcrumbs" data-v-057748f7><li data-v-057748f7><a href="/cs_knowledge_base_vuepress_vdoing_publish/" title="首页" class="iconfont icon-home router-link-active" data-v-057748f7></a></li> <li data-v-057748f7><a href="/cs_knowledge_base_vuepress_vdoing_publish/opensource/#开源" data-v-057748f7>开源</a></li></ul> <div class="info" data-v-057748f7><!----> <div title="创建时间" class="date iconfont icon-riqi" data-v-057748f7><a href="javascript:;" data-v-057748f7>2024-12-02</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABKFJREFUSA3tVl1oFVcQnrMbrak3QUgkya1akpJYcrUtIqW1JvFBE9LiQ5v6JmJpolbMg32rVrhgoYK0QiMY6i9Y6EMaW5D+xFJaTYItIuK2Kr3+BJNwkxBj05sQY3b3nM6cs2dv9t7NT/vQJw/sndk5M/PNzJkzewGerP+pAmy+ON8lLzUJgA8ZYxYIYZmGYRnctDaWvJJAmTtfP1pvXsBCCPP8QFcCaRkZYACgDZFO4stNIcBCajEOlmmC9XpJ9bAGCaPaPmzPl32dvLSVu3BWCTQs0XQQ6g0DYgwLIoAZbBCdW/i+781o1VVlm/410mw4h06Y7bIPHNyWDyL4FHkX03Q8SrzNhZTZriieckWt7cL6MM85YcLpsi/7O9/iXFT6MswI0DmmpkSaJ0qLxFIm3+i1THHB3zmBH3PYx9CcykcLOeQVVa7QtdxTgQgEleX2AjHYfwA+2ddV77ruGoJUbhGDI09YSNXyMpUt5ylOzxgbUmtOp7NmbNt8v3arjTBfYELmLUV+M+nSawNNAUqpT3ClJWg5I3BLT+cGW/DXNGCa6tx1aakCGEigArTn4TDIPdrXXYKCZNrHLMCOEPvHBlLQ99s9eHB7EB6NTki73CVPQ2F5MSx/uRQixfmq7rK0wYD8w8E905bnPDfwoWs/rfv93NWN/ZfvwsLIU7A09gxECyISeGJkHAau98L97tuw7NXnoPyNF8FcYGLGKsOs0mN3OEyec9esGW/ZEl945dTP34wlR2FZVQWU1q0Cw8Tr7p+hgLLNL0FPxx/Q35mA8aEUrH6nCgwEl0tn7wUiZYJnNRh6DK4UH/k0lfyrsBKdPVv/AriGIQcEDQZ65LBAGe2Rzui9Ybjz7XUppz1/uKBbyVPGkN3ZAeC6hr0x7Nr38N5+EqkoOm17xpoqR9ohQF55ERSvr4Dkr3chNfC3DMzGJlNBElW8w9nsGQvhNGIzDkXzCg8cLK951xHsFBlTJspJNi3ZFIMF2AeDV3q8DNOB+YHi6QTrChDIWDBRi5U5f+ZMfJLu3ccrqxtdxk4SKH336LFxSmkqefwU5T8fhdSdQf9IVKD6aNiwI/hnmcAZ91isYMJIaCUCx9W098+LgruikeTqzqqxKPUwqJyCPJiyemVVZBOijDGjD38Os0jOiSPL1z3SPjXNANbiNPXAdzTfukjjuknNBbyz3nwgTd3AVFqUJ5hpHlq9MveLnWwttUfoygBmvVjuikxND3znrhsELnZk7k+OjIGxeNEkomyLVta0xxn+HZhjBc4YZ/AFjHjz9u3xRZl2BN4aq9nFwWh16IrQ1aHHEd3j1+4/dB9OtH4e29A2H1DyHQRmOSfQZ1Fy7MHBTGB6J/Djq6p3OxyO2cB+4Car7v/o3GXgfAkj23+x9ID1Teoamo/SXcbvSf2PX7Vc8DdCmE1vN9di+32P9/5YR3vLnhCVGUWBjEkr3yh4H8v9CzmsbdhzOKzsJKM90iFdaTMjRPhGVsakRvOaRidljo6H6G7j+ctrJpsP+4COhDIl0La2+FS4+5mlocBaXY5QnGZysIBYoeSsl5qQzrSj/cgNrfuEzlWBfwA+EjrZyWUvpAAAAABJRU5ErkJggg==">QEMU EDU 设备驱动<!----></h1> <!----> <div class="theme-vdoing-content content__default"><p>QEMU EDU 设备是 QEMU 中用于设备驱动程序教学的设备。在马萨里克大学的 Linux 内核课程中，学生可以使用这个虚拟设备编写一个包含 I/O、IRQ、DMA 等的驱动程序。</p> <p>设备规范：<a href="https://www.qemu.org/docs/master/specs/edu.html" target="_blank" rel="noopener noreferrer">EDU device — QEMU documentation<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <p>设备源码：<a href="https://github.com/qemu/qemu/blob/master/hw/misc/edu.c" target="_blank" rel="noopener noreferrer">https://github.com/qemu/qemu/blob/master/hw/misc/edu.c<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <p>本文参考已有的项目重新从零实现 QEMU EDU 的驱动程序。参考项目：</p> <ul><li><a href="https://github.com/kokol16/EDU-driver" target="_blank" rel="noopener noreferrer">kokol16/EDU-driver: A Linux driver for Qemu’s device EDU<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://github.com/ysan/qemu-edu-driver" target="_blank" rel="noopener noreferrer">ysan/qemu-edu-driver: Device driver for QEMU educational PCI device.<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul> <p><strong>由于文章中的代码是由浅入深，不断叠加修改，因此若文中有不合理或疏忽的地方请参考最终的源码。</strong></p> <p>源码地址：<a href="https://github.com/jklincn/qemu_edu_driver" target="_blank" rel="noopener noreferrer">https://github.com/jklincn/qemu_edu_driver<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <h2 id="qemu-启动"><a href="#qemu-启动" class="header-anchor">#</a> QEMU 启动</h2> <p>本文使用的 QEMU 版本为 8.2.5，QEMU 的安装以及磁盘镜像的准备可以参考<a href="https://jklincn.com/posts/wsl_qemu_p2pdma/#%E5%AE%89%E8%A3%85-qemu" target="_blank" rel="noopener noreferrer">在 WSL 中使用 QEMU 搭建 PCIe 模拟环境<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>qemu-system-x86_64 -enable-kvm \
+        -M q35 \
+        -cpu SapphireRapids-v2 \
+        -smp 8 \
+        -m 16G \
+        -hda ubuntu.qcow2 \
+        -netdev user,id=net0,hostfwd=tcp::10022-:22 \
+        -device e1000,netdev=net0 \
+        -device edu
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>此处对网络设备的设置是为了可以使用 vscode 进行远程连接，方便开发。</p> <p>进入系统后使用 lspci 应该可以看到 edu 设备，即 00:03.0 Unclassified device [00ff]: Device 1234:11e8 (rev 10)</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>$ lspci
+00:00.0 Host bridge: Intel Corporation 82G33/G31/P35/P31 Express DRAM Controller
+00:01.0 VGA compatible controller: Device 1234:1111 (rev 02)
+00:02.0 Ethernet controller: Intel Corporation 82540EM Gigabit Ethernet Controller (rev 03)
+00:03.0 Unclassified device [00ff]: Device 1234:11e8 (rev 10)
+00:1f.0 ISA bridge: Intel Corporation 82801IB (ICH9) LPC Interface Controller (rev 02)
+00:1f.2 SATA controller: Intel Corporation 82801IR/IO/IH (ICH9R/DO/DH) 6 port SATA Controller [AHCI mode] (rev 02)
+00:1f.3 SMBus: Intel Corporation 82801I (ICH9 Family) SMBus Controller (rev 02)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h2 id="编写-pci-驱动程序"><a href="#编写-pci-驱动程序" class="header-anchor">#</a> 编写 PCI 驱动程序</h2> <p>这一部分可以先阅读 Linux 官方文档：<a href="https://docs.kernel.org/PCI/pci.html" target="_blank" rel="noopener noreferrer">1. How To Write Linux PCI Drivers — The Linux Kernel documentation<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>。</p> <h3 id="简单驱动模板"><a href="#简单驱动模板" class="header-anchor">#</a> 简单驱动模板</h3> <p>先搭一个大体的框架，这和 PCI 无关，这是为了测试当前的环境配置，该文件命名为 qemu_edu_driver.c</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>#include &lt;linux/module.h&gt;
+
+#define DRIVER_NAME &quot;qemu_edu&quot;
+
+static int edu_init() {
+    printk(KERN_INFO &quot;[%s] Init sucessful. \n&quot;, DRIVER_NAME);
+    return 0;
+}
+
+static void edu_exit() {}
+
+module_init(edu_init);
+module_exit(edu_exit);
+
+MODULE_LICENSE(&quot;GPL&quot;);
+MODULE_DESCRIPTION(&quot;QEMU EDU Device Driver&quot;);
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><p>再创建一个 Makefile</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>obj-m	:= qemu_edu_driver.o
+KERNELDIR ?= /lib/modules/$(shell uname -r)/build
+CFLAGS=-Wall
+
+modules:
+	make -C $(KERNELDIR) M=$(PWD) modules
+
+clean:
+	make -C $(KERNELDIR) M=$(PWD) clean
+
+.PHONY: modules clean
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><p>安装编译工具与内核头文件</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>sudo apt install build-essential linux-headers-$(uname -r)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>进行编译和加载</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>make
+sudo insmod qemu_edu_driver.ko
+sudo dmesg | grep qemu_edu
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>如果一切正常，可以看到有 [qemu_edu] Init sucessful. 这样的输出</p> <h3 id="注册驱动程序"><a href="#注册驱动程序" class="header-anchor">#</a> 注册驱动程序</h3> <p>这里主要涉及到 pci_register_driver() 函数，其接口是</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>/* Proper probing supporting hot-pluggable devices */
+int __must_check __pci_register_driver(struct pci_driver *, struct module *,
+				       const char *mod_name);
+
+/* pci_register_driver() must be a macro so KBUILD_MODNAME can be expanded */
+#define pci_register_driver(driver)		\
+	__pci_register_driver(driver, THIS_MODULE, KBUILD_MODNAME)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>因此我们只需要准备好 pci_driver 结构体</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>static struct pci_driver pci_driver = {
+    .name = DRIVER_NAME,
+    .id_table = pci_ids,
+    .probe = edu_probe,
+    .remove = edu_remove,
+};
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>其中还涉及到 pci_device_id 结构体，我们把 EDU 设备的信息填充进去，并使用 MODULE_DEVICE_TABLE 进行导出。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>static struct pci_device_id pci_ids[] = {{PCI_DEVICE(0x1234, 0x11e8)},
+                                         {
+                                             0,
+                                         }};
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>这里对于 probe 和 remove 的处理我们先定义两个空函数，其声明可见 pci_driver 结构体。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>static int edu_probe(struct pci_dev *pdev, const struct pci_device_id *id) {
+    return 0;
+}
+
+static void edu_remove(struct pci_dev *pdev) {}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>从 __pci_register_driver() 的描述中可以看到其返回值定义：如果有错误发生则返回负数的错误码，否则返回 0，因此做一个判断检查函数是否执行成功。</p> <p>目前完整的代码如下</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>#include &lt;linux/module.h&gt;
+#include &lt;linux/pci.h&gt;
+
+#define DRIVER_NAME &quot;qemu_edu&quot;
+
+static struct pci_device_id pci_ids[] = {{PCI_DEVICE(0x1234, 0x11e8)},
+                                         {
+                                             0,
+                                         }};
+MODULE_DEVICE_TABLE(pci, pci_ids);
+
+static int edu_probe(struct pci_dev *pdev, const struct pci_device_id *id) {
+    return 0;
+}
+
+static void edu_remove(struct pci_dev *pdev) {}
+
+static struct pci_driver pci_driver = {
+    .name = DRIVER_NAME,
+    .id_table = pci_ids,
+    .probe = edu_probe,
+    .remove = edu_remove,
+};
+
+static int __init edu_init(void) {
+    int ret;
+    if ((ret = pci_register_driver(&amp;pci_driver)) &lt; 0) {
+        printk(KERN_INFO &quot;[%s] Init failed. \n&quot;, DRIVER_NAME);
+        return ret;
+    }
+
+    printk(KERN_INFO &quot;[%s] Init sucessful. \n&quot;, DRIVER_NAME);
+    return ret;
+}
+
+static void __exit edu_exit(void) {
+    pci_unregister_driver(&amp;pci_driver);
+    printk(KERN_INFO &quot;[%s] exit sucessful. \n&quot;, DRIVER_NAME);
+}
+
+module_init(edu_init);
+module_exit(edu_exit);
+
+MODULE_LICENSE(&quot;GPL&quot;);
+MODULE_DESCRIPTION(&quot;QEMU EDU Device Driver&quot;);
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br></div></div><h3 id="实现-probe-和-remove-函数"><a href="#实现-probe-和-remove-函数" class="header-anchor">#</a> 实现 probe 和 remove 函数</h3> <p>根据文档，probe 函数主要做的事情包括：</p> <ol><li>启用设备</li> <li>请求 MMIO/IOP 资源</li> <li>设置 DMA 掩码大小（包括一致性 DMA 和流式 DMA）</li> <li>分配和初始化共享控制数据（pci_allocate_coherent()）</li> <li>访问设备配置空间（如果需要）</li> <li>注册 IRQ 处理程序（<a href="https://docs.kernel.org/core-api/genericirq.html#c.request_irq" target="_blank" rel="noopener noreferrer">request_irq()<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>）</li> <li>初始化非 PCI（即芯片的 LAN/SCSI/ 等部分）</li> <li>启用 DMA/处理 引擎</li></ol> <p>我们根据这个顺序来依次实现它：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>void __iomem *mmio_base;
+static int edu_probe(struct pci_dev *pdev, const struct pci_device_id *id) {
+    int ret;
+
+    // Enable the PCI device
+    if ((ret = pci_enable_device(pdev)) &lt; 0) {
+        printk(KERN_ERR &quot;[%s] pci_enable_device failed. \n&quot;, DRIVER_NAME);
+        return ret;
+    }
+
+    // Request MMIO/IOP resources
+    if ((ret = pci_request_region(pdev, BAR, DRIVER_NAME)) &lt; 0) {
+        printk(KERN_ERR &quot;[%s] pci_request_region failed. \n&quot;, DRIVER_NAME);
+        goto disable_device;
+    }
+
+    // Set the DMA mask size
+    // EDU device supports only 28 bits by default
+    if ((ret = dma_set_mask_and_coherent(&amp;(pdev-&gt;dev), DMA_BIT_MASK(28)) &lt; 0)) {
+        dev_warn(&amp;pdev-&gt;dev, &quot;[%s] No suitable DMA available\n&quot;, DRIVER_NAME);
+        goto release_regions;
+    }
+
+    // Map the BAR register
+    mmio_base = pci_iomap(pdev, BAR, pci_resource_len(pdev, BAR));
+    if (!mmio_base) {
+        printk(KERN_ERR &quot;[%s] Cannot iomap BAR\n&quot;, DRIVER_NAME);
+        ret = -ENOMEM;
+        goto release_regions;
+    }
+
+    // Allow device to initiate DMA operations
+    pci_set_master(pdev);
+
+    // Register IRQ handler
+    if ((ret = request_irq(pdev-&gt;irq, edu_irq_handler, IRQF_SHARED, DRIVER_NAME,
+                           pdev) &lt; 0)) {
+        printk(KERN_ERR &quot;[%s] Failed to request IRQ %d\n&quot;, DRIVER_NAME,
+               pdev-&gt;irq);
+        goto unmap_bar;
+    }
+
+    printk(KERN_INFO &quot;[%s] probe sucessfully.\n&quot;, DRIVER_NAME);
+    return 0;
+
+unmap_bar:
+    pci_iounmap(pdev, mmio_base);
+release_regions:
+    pci_release_regions(pdev);
+disable_device:
+    pci_disable_device(pdev);
+
+    return ret;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br></div></div><p>这里的中断处理函数目前为空：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>static irqreturn_t edu_irq_handler(int irq, void *dev_id) {
+    printk(KERN_INFO &quot;[%s] Interrupt handled, IRQ: %d\n&quot;, DRIVER_NAME, irq);
+    return IRQ_HANDLED;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>edu_probe 函数现在完成了设备启用、请求 MMIO/IOP 资源、设置 DMA 掩码大小和注册 IRQ 处理程序的功能，并且加入了完善的错误处理。</p> <p>相应地，edu_remove 需要以相反的顺序完成这些操作：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>static void edu_remove(struct pci_dev *pdev) {
+    free_irq(pdev-&gt;irq, pdev);
+    pci_iounmap(pdev, mmio_base);
+    pci_release_region(pdev, BAR);
+    pci_disable_device(pdev);
+    printk(KERN_INFO &quot;[%s] removed.\n&quot;, DRIVER_NAME);
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h2 id="用户空间交互"><a href="#用户空间交互" class="header-anchor">#</a> 用户空间交互</h2> <p>我们已经完成了 PCI 设备基本的驱动实现，接下来就是想办法使用这个 EDU 设备，根据文档可以知道这个设备可以进行阶乘计算，因此我们需要提供一个能够与用户空间交互的手段，即注册一个字符设备。这部分可以参考 <a href="https://lwn.net/images/pdf/LDD3/ch03.pdf" target="_blank" rel="noopener noreferrer">Linux Device Drivers, Third Edition: Chapter 3: Char Drivers<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 。</p> <h3 id="注册字符设备"><a href="#注册字符设备" class="header-anchor">#</a> 注册字符设备</h3> <p>要做的工作有：分配设备主编号，创建类，创建设备节点，把它们加入到 probe 函数中，同时在错误处理和 remove 中也要添加相应的注销/销毁函数，这里不再展示，可以看源码。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>	···   
+	// Allocate the device major number
+    major = register_chrdev(0, DRIVER_NAME, &amp;fops);
+    if (major &lt; 0) {
+        printk(KERN_ERR &quot;[%s] Failed to register char device\n&quot;, DRIVER_NAME);
+        ret = major;
+        goto disable_device;
+    }
+
+    // Create Class
+    edu_class = class_create(THIS_MODULE, DRIVER_NAME);
+    if (IS_ERR(edu_class)) {
+        printk(KERN_ERR &quot;[%s] Failed to create class\n&quot;, DRIVER_NAME);
+        ret = PTR_ERR(edu_class);
+        goto unregister_chrdev;
+    }
+
+    // Create device node: /dev/edu
+    dev_num = MKDEV(major, MINOR_NUMBER);
+    if (device_create(edu_class, NULL, dev_num, NULL, &quot;edu&quot;) == NULL) {
+        printk(KERN_ERR &quot;[%s] Failed to create device node\n&quot;, DRIVER_NAME);
+        ret = -EINVAL;
+        goto destroy_class;
+    }
+    ··· 
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div></div><h3 id="实现文件操作"><a href="#实现文件操作" class="header-anchor">#</a> 实现文件操作</h3> <p>上述代码引用了 fops 变量，这是一个文件操作函数集。结合 EDU 设备规范，我们目前实现 2 个函数，分别是 read（读取设备寄存器）、write（写入设备寄存器）。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>static struct file_operations fops = {
+    .owner = THIS_MODULE, .read = edu_read, .write = edu_write};
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>read 和 write 都根据规范先对偏移量做了有效性判断和对写入大小的判断，然后在 read 中使用 io_read32 和 copy_to_user，在 write 中使用 copy_from_user 和 io_write32 来完成实际的读取和写入操作。（使用 ioread64 和 iowrite64 会报错，可能是内核配置问题，因此使用两个 32 位操作做替代）</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>static ssize_t edu_read(struct file *filp, char __user *buf, size_t count,
+                        loff_t *ppos) {
+    uint32_t value32;
+    uint64_t value64;
+
+    // Check if the offset is valid
+    if (*ppos != 0x00 &amp;&amp; *ppos != 0x04 &amp;&amp; *ppos != 0x08 &amp;&amp; *ppos != 0x20 &amp;&amp;
+        *ppos != 0x24 &amp;&amp; *ppos != 0x80 &amp;&amp; *ppos != 0x88 &amp;&amp; *ppos != 0x90 &amp;&amp;
+        *ppos != 0x98) {
+        return -EINVAL;
+    }
+
+    // Check read size
+    if (*ppos &lt; 0x80) {
+        if (count != 4) {
+            return -EINVAL;
+        }
+    } else {
+        if (count != 4 &amp;&amp; count != 8) {
+            return -EINVAL;
+        }
+    }
+
+    if (count == 4) {
+        value32 = ioread32(mmio_base + *ppos);
+        if (copy_to_user(buf, &amp;value32, sizeof(value32))) {
+            return -EFAULT;
+        }
+        *ppos += sizeof(value32);
+    } else {
+        uint32_t low = ioread32(mmio_base + *ppos);
+        uint32_t high = ioread32(mmio_base + *ppos + 4);
+        value64 = ((uint64_t)high &lt;&lt; 32) | low;
+        if (copy_to_user(buf, &amp;value64, sizeof(value64))) {
+            return -EFAULT;
+        }
+        *ppos += sizeof(value64);
+    }
+
+    return count;
+}
+
+static ssize_t edu_write(struct file *filp, const char __user *buf,
+                         size_t count, loff_t *ppos) {
+    uint32_t value32;
+    uint64_t value64;
+
+    // Check if the offset is valid
+    if (*ppos != 0x04 &amp;&amp; *ppos != 0x08 &amp;&amp; *ppos != 0x20 &amp;&amp; *ppos != 0x60 &amp;&amp;
+        *ppos != 0x64 &amp;&amp; *ppos != 0x80 &amp;&amp; *ppos != 0x88 &amp;&amp; *ppos != 0x90 &amp;&amp;
+        *ppos != 0x98) {
+        return -EINVAL;
+    }
+
+    // Check write size
+    if (*ppos &lt; 0x80) {
+        if (count != 4) {
+            return -EINVAL;
+        }
+    } else {
+        if (count != 4 &amp;&amp; count != 8) {
+            return -EINVAL;
+        }
+    }
+
+    if (count == 4) {
+        if (copy_from_user(&amp;value32, buf, sizeof(value32))) {
+            return -EFAULT;
+        }
+        iowrite32(value32, mmio_base + *ppos);
+        *ppos += sizeof(value32);
+    } else {
+        if (copy_from_user(&amp;value64, buf, sizeof(value64))) {
+            return -EFAULT;
+        }
+        iowrite32((uint32_t)value64, mmio_base + *ppos);
+        iowrite32((uint32_t)(value64 &gt;&gt; 32), mmio_base + *ppos + 4);
+        *ppos += sizeof(value64);
+    }
+
+    return count;
+}
+
+static struct file_operations fops = {
+    .owner = THIS_MODULE, .read = edu_read, .write = edu_write};
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br></div></div><h3 id="用户代码测试"><a href="#用户代码测试" class="header-anchor">#</a> 用户代码测试</h3> <p>此时我们已经可以写一段用户空间代码来测试我们创建的 /dev/edu 接口是否可以正常工作了。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>#include &lt;errno.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+
+#define EDU_DEVICE &quot;/dev/edu&quot;
+
+int main() {
+    int fd;
+    uint32_t read_value, write_value;
+    fd = open(EDU_DEVICE, O_RDWR);
+    if (fd &lt; 0) {
+        perror(&quot;Failed to open the device&quot;);
+        return errno;
+    }
+    write_value = 10;
+    ssize_t bytes_write = pwrite(fd, &amp;write_value, sizeof(write_value), 0x08);
+    printf(&quot;Write Value: %d, Write Size: %zd\n&quot;, write_value, bytes_write);
+    pread(fd, &amp;read_value, sizeof(read_value), 0x08);
+    printf(&quot;Result: %d\n&quot;, read_value);
+    return 0;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br></div></div><p>这段代码先使用 open 系统调用打开了设备节点，然后使用 pwrite 往 0x08 偏移量（即规范上的 factorial computation）写入 10 进行 10 的阶乘计算，最后使用 pread 读取计算结果。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>$ gcc user_test.c -o user_test
+$ sudo ./user_test
+Write Value: 10, Write Size: 4
+Result: 3628800
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>这里需要注意的是，查阅 QEMU EDU 的<a href="https://github.com/qemu/qemu/blob/master/hw/misc/edu.c#L326" target="_blank" rel="noopener noreferrer">实现源码<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>可以知道计算结果是用 uint32_t 类型来存储，因此如果计算溢出（输入的数超过 12）就会进行截断取低位。</p> <h2 id="中断处理"><a href="#中断处理" class="header-anchor">#</a> 中断处理</h2> <p>在上面的用户代码中我们并没有检查计算是否已经完成，假设输入的是一个非常大的数，需要一些时间进行计算，那么我们在写入后立刻进行读取时可能就会读取到错误的数值。</p> <p>就比如之前的程序，多运行几次的结果是有所不同的，其中输出 0xa 就表示计算还没有完成。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>$ sudo ./user_test 
+4
+0x375f00
+$ sudo ./user_test 
+4
+0xa
+$ sudo ./user_test 
+4
+0x375f00
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>QEMU EDU 设备规范中描述了其中断信息，我们可以利用中断来准确得到计算完成的时间。</p> <h3 id="共享中断"><a href="#共享中断" class="header-anchor">#</a> 共享中断</h3> <p>之前我们使用了 IRQF_SHARED 来注册了中断处理程序，即共享中断，因此我们需要考虑中断是否是由当前设备发起。在两个参考项目中，使用 request_irq 注册中断时分别传递了主设备号、自定义结构体参数用来后续的判断，这里我们为了规范，使用自定义结构体（即设备特定的结构体）来处理。</p> <p>因此我们需要定义一个 edu_device 结构体，并且可以把之前定义的全局变量都放进去。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>struct edu_device {
+    dev_t dev_num;
+    struct pci_dev *pdev;
+    void __iomem *mmio_base;
+    bool complete;
+    struct cdev cdev;
+    wait_queue_head_t wait_queue;
+};
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><p>这样要同步修改 edu_probe() 函数，并且在其中使用 pci_set_drvdata() 函数将我们自己的 edu_device 绑定到 pci_dev 中，方便其他的接口从 pci_dev 中取得 edu_device 结构体。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>	···	
+	// Allocate an edu_device structure
+    edu_dev = kzalloc(sizeof(*edu_dev), GFP_KERNEL);
+    if (!edu_dev) return -ENOMEM;
+    edu_dev-&gt;pdev = pdev;
+	···
+    pci_set_drvdata(pdev, edu_dev);
+	···
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><p>pci_set_drvdata() 函数的实质是把传入的指针绑定到其关联的 device 结构体的 driver_data 字段。后续就可以使用 pci_get_drvdata() 来进行获取。edu_remove() 函数也要做相应的处理。两个修改后的函数具体可见源码。</p> <p>注意到结构体中还加入了一个 cdev 结构体，这是为了在 edu_read() 和 edu_write() 两个函数中能获得 mmio_base 变量（它目前已不是全局变量）。具体的寻找方法是：</p> <ol><li>在 edu_probe() 过程中初始化 cdev 结构体（而不是原先简单地使用 register_chrdev() 函数）；</li> <li>实现 edu_open()，在其中通过 container_of 宏基于 cdev 结构体来找到 edu_device 结构体，并把它绑定到 file 结构体的 private_data 中。</li></ol> <p>由此，在 edu_read() 和 edu_write() 中我们就可以通过 filp-&gt;private_data 来找到 edu_device。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>	···
+    struct edu_device *edu_dev;
+    edu_dev = filp-&gt;private_data;
+    value32 = ioread32(edu_dev-&gt;mmio_base + *ppos);
+	···
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>最后，我们可以通过设备规范中的中断状态寄存器（interrupt status register）来确认中断是否由当前设备发起。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>	···
+	// Check:
+    // 1. dev_id is not null;
+    // 2. Interrupt status register is not zero.
+    if (!edu_dev || (status = ioread32(edu_dev-&gt;mmio_base + 0x24)) == 0) {
+        return IRQ_NONE;
+    }
+	···
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="等待队列"><a href="#等待队列" class="header-anchor">#</a> 等待队列</h3> <p>当用户空间程序使用 pread() 来读取阶乘计算结果时，我们不妨把这个操作设计成同步读取，即计算没有完成之前，该调用不返回，以此来确保读取到的结果一定是计算已经完成的结果。</p> <p>最简单的思路就是对中断状态寄存器进行轮询，当最低一位的比特消失时就表示计算已经完成，但这会导致 CPU 时间的浪费，等待期间 CPU 做不了其他的事情。而中断加等待队列的方式就可以解决这个问题。这部分可以参考 <a href="https://lwn.net/images/pdf/LDD3/ch06.pdf" target="_blank" rel="noopener noreferrer">Linux Device Drivers, Third Edition: Chapter 6: Advanced Char Driver Operations<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 中的 Blocking I/O 一节。</p> <p>我们先在 edu_probe() 中对等待队列和等待条件进行初始化：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>    ···
+	init_waitqueue_head(&amp;edu_dev-&gt;wait_queue);
+    edu_dev-&gt;complete = true;
+	···
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>然后在 edu_write() 中修改等待条件：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>	···    
+	// Factorial computation
+    if (*ppos == 0x08) {
+        edu_dev-&gt;complete = false;
+    }
+	···
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>在 edu_read() 中进行等待，使用 wait_event_interruptible() 是为了能够处理一些信号：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>	···    
+	// Get factorial computation result
+    if (*ppos == 0x08) {
+        int ret;
+        ret = wait_event_interruptible(edu_dev-&gt;wait_queue, edu_dev-&gt;complete);
+        // Deal with signal interruptions
+        if (ret == -ERESTARTSYS) {
+            return ret;
+        }
+    }
+	···
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><p>这样，当用户写入数据时，等待条件 edu_dev-&gt;complete 会变成 false，设备开始计算阶乘；当用户读取计算结果时，如果计算还没有结束，则会进行等待。</p> <p>最后，我们在 edu_irq_handler() 设置等待条件并唤醒进程：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>	···    
+    // Wake up so that edu_read() can return correct value.
+    edu_dev-&gt;complete = true;
+    wake_up_interruptible(&amp;edu_dev-&gt;wait_queue);
+	···
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h3 id="硬件设置"><a href="#硬件设置" class="header-anchor">#</a> 硬件设置</h3> <p>这部分取决于具体的硬件规范，主要是启用阶乘计算中断和消除中断。</p> <p>根据规范，在 edu_probe() 函数中往 0x20 偏移量写入 0x80 启用硬件计算完成后触发中断的功能。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>	···    
+	// Device initialize
+    // Raise interrupt after finishing factorial computation
+    iowrite32(0x80, edu_dev-&gt;mmio_base + 0x20);
+	···
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>同时在 edu_irq_handler() 中接收到中断时，检查并获取中断状态寄存器的值，最后向中断确认寄存器（interrupt acknowledge register）写入相同的值来让设备停止产生中断：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>    ···
+    if (!edu_dev || (status = ioread32(edu_dev-&gt;mmio_base + 0x24)) == 0) {
+        return IRQ_NONE;
+    }
+    ···
+    // Acknowledge Interrupt
+    iowrite32(status, edu_dev-&gt;mmio_base + 0x64);
+    
+    return IRQ_HANDLED;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p>准备好这一切后就可以开始测试，通过系统日志的输出时间我们可以看到执行流程和我们预期的一致：开始计算——读取等待——计算完毕发起中断——中断处理——读取返回。（这些输出代码在最终源码中已删去，读者可自行添加）</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>[38231.735887] [qemu_edu] device starts calculating.
+[38231.735965] [qemu_edu] edu_read() start to wait.
+[38231.736000] [qemu_edu] Receive interrupt, status: 1
+[38231.736032] [qemu_edu] edu_read() wake up!
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h2 id="使用-dma-传输数据"><a href="#使用-dma-传输数据" class="header-anchor">#</a> 使用 DMA 传输数据</h2> <p>继续阅读设备规范，EDU 设备还支持 DMA 操作，0x80、0x88、0x90 这几个偏移量对应的寄存器分别定义了 DMA 传输中的参数（注意这些寄存器是 64 位大小），0x98 是 DMA 控制寄存器，控制 DMA 传输开始、传输方向和是否在传输结束后发起中断（值为 0x100）。在规范的 DMA controller 中还提到 EDU 设备在 0x40000 偏移量处有一个 4096 字节的缓冲区。</p> <h3 id="设置传输参数"><a href="#设置传输参数" class="header-anchor">#</a> 设置传输参数</h3> <p>了解规范后我们就可以开始设计要怎么处理 DMA 操作，首先要清楚的是 DMA 地址的一个设置于变化。当用户空间程序想要发起一次从内存到设备的 DMA 传输时，它提供源地址和传输大小，目标地址是 0x40000。但要注意这里的地址是用户空间的地址，因此内核在设置设备寄存器时不能直接使用（即 DMA 传输操作理应是内核空间和设备进行传输，尽管想要传输的数据来自用户空间）。所以我们需要使用 copy_from_user() 函数把来自用户的数据拷贝到内核空间中，并把 DMA 的源地址设置成内核空间的地址。</p> <p>我们在 edu_write() 中做一个中间转换层，对于 DMA 相关参数的设置，先把来自用户的参数保存到 edu_device 中，在用户开始 DMA 传输（往 DMA 控制寄存器写入数据）时，再进行数据从用户空间到内核空间的拷贝。</p> <blockquote><p>这里做“延迟拷贝”会有一个隐含的问题就是用户空间的数据不能被释放，如果是一个函数的局部变量，在函数退出时变量被释放，在 edu_device 中保存的指针也就变成了野指针。</p></blockquote> <p>在 edu_device 结构体中加入存储的变量，这里的 dma_buffer 和 dma_addr 用于后续中断处理函数中进行缓冲区的释放。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>struct edu_device {
+    ···
+    uint64_t dma_src_address;
+    uint64_t dma_dst_address;
+    uint64_t dma_count;
+    void *dma_buffer;
+    uint32_t dma_direction;
+    dma_addr_t dma_addr;
+};
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>注意这里对 edu_write() 进行了重写，先根据 count 来进行判断并读取用户传来的数据，再根据写入的偏移量做实际的处理。这里限定用户只能对下面指定的 5 个偏移量（寄存器）进行写入操作。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>    ···
+	switch (*ppos) {
+        case EDU_FACT_CALC:
+            ···
+        case EDU_DMA_SRC_ADDR:
+            edu_dev-&gt;dma_src_address = count == 4 ? value32 : value64;
+            break;
+        case EDU_DMA_DST_ADDR: {
+            edu_dev-&gt;dma_dst_address = count == 4 ? value32 : value64;
+            break;
+        }
+        case EDU_DMA_COUNT:
+            edu_dev-&gt;dma_count = count == 4 ? value32 : value64;
+            break;
+        case EDU_DMA_CMD: {
+            uint64_t cmd = count == 4 ? value32 : value64;
+            void *buffer_addr;
+            dma_addr_t dma_addr;
+            struct device *dev = &amp;edu_dev-&gt;pdev-&gt;dev;
+
+            // Set transfer count
+            size_t size = edu_dev-&gt;dma_count;
+            SET_DMA(size, EDU_DMA_COUNT);
+
+            // Prepare DMA buffer
+            buffer_addr = dma_alloc_coherent(dev, size, &amp;dma_addr, GFP_KERNEL);
+            if (!buffer_addr) {
+                printk(KERN_ERR
+                       &quot;[%s] DMA_CMD: Failed to allocate memory for dma\n&quot;,
+                       DRIVER_NAME);
+                return -ENOMEM;
+            }
+            if (cmd &amp; DMA_EDU2RAM) {
+                // EDU to RAM
+                // Check transfer count
+                if (edu_dev-&gt;dma_src_address + size &gt;=
+                    EDU_BUFFER_ADDRESS + BUFFER_SIZE) {
+                    printk(KERN_ERR &quot;[%s] DMA_CMD: Memory out of bounds\n&quot;,
+                           DRIVER_NAME);
+                    dma_free_coherent(dev, size, buffer_addr, dma_addr);
+                    return -EFAULT;
+                }
+
+                SET_DMA(edu_dev-&gt;dma_src_address, EDU_DMA_SRC_ADDR);
+                SET_DMA(dma_addr, EDU_DMA_DST_ADDR);
+                printk(KERN_INFO
+                       &quot;[%s] Start DMA: Direction: EDU to RAM, Source Address: &quot;
+                       &quot;0x%llx\n, Destination Address: 0x%llx, count:%ld&quot;,
+                       DRIVER_NAME, edu_dev-&gt;dma_src_address, dma_addr, size);
+            } else {
+                // RAM to EDU
+                // Check transfer count
+                if (edu_dev-&gt;dma_dst_address + size &gt;=
+                    EDU_BUFFER_ADDRESS + BUFFER_SIZE) {
+                    printk(KERN_ERR &quot;[%s] DMA_CMD: Memory out of bounds\n&quot;,
+                           DRIVER_NAME);
+                    dma_free_coherent(dev, size, buffer_addr, dma_addr);
+                    return -EFAULT;
+                }
+
+                // Copy user data to buffer
+                if (copy_from_user(buffer_addr,
+                                   (const void *)edu_dev-&gt;dma_src_address,
+                                   sizeof(edu_dev-&gt;dma_count))) {
+                    printk(KERN_ERR &quot;[%s] DMA_CMD: Failed to copy_from_user\n&quot;,
+                           DRIVER_NAME);
+                    dma_free_coherent(dev, size, buffer_addr, dma_addr);
+                    return -EFAULT;
+                }
+
+                SET_DMA(dma_addr, EDU_DMA_SRC_ADDR);
+                SET_DMA(edu_dev-&gt;dma_dst_address, EDU_DMA_DST_ADDR);
+                printk(KERN_INFO
+                       &quot;[%s] Start DMA: Direction: RAM to EDU, Source Address: &quot;
+                       &quot;0x%llx\n, Destination Address: 0x%llx, count:%ld&quot;,
+                       DRIVER_NAME, dma_addr, edu_dev-&gt;dma_dst_address, size);
+            }
+
+            // Start DMA
+            SET_DMA(value64 | DMA_START | DMA_IRQ, EDU_DMA_CMD);
+
+            dma_free_coherent(dev, edu_dev-&gt;dma_count, buffer_addr, dma_addr);
+
+            break;
+        }
+        default:
+            return -EINVAL;
+    }
+    ···
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br></div></div><p>对于 EDU_DMA_SRC_ADDR、EDU_DMA_DST_ADDR、EDU_DMA_COUNT 这三个寄存器的写入，我们只是把写入的数据做了保存。当用户往 EDU_DMA_CMD 寄存器写入时，才开始做处理：</p> <ol><li>根据传入的数据判断传输方向（内存到设备还是设备到内存）</li> <li>从 edu_dev-&gt;dma_count 中读取传输的大小，并写入设备的 DMA 传输大小寄存器。</li> <li>根据传输大小分配 DMA 缓冲区，其中 buffer_addr 是内核空间的虚拟地址，dma_addr 是 DMA 控制器使用的物理地址。</li> <li>检查传输地址和传输大小的合法性，主要是不能超出 EDU 设备所规定的区域（数据区域必须在 0x40000 和 0x40000+4096 之间）</li> <li><strong>如果是内存往设备传输，则需要将用户空间的数据拷贝至缓冲区中。</strong></li> <li>写入设备的 DMA 地址寄存器，设置 DMA 传输的源和目的地址。</li> <li>写入设备的 DMA 控制寄存器，开始 DMA 传输。这里我们自动填充 DMA_START 和 DMA_IRQ 比特位，即用户空间程序只需要设置传输方向。</li> <li><strong>如果是设备往内存传输，则 DMA 传输完成后把内核缓冲区的数据拷贝到用户空间的工作由中断处理函数来做。</strong></li></ol> <blockquote><p>实际上 DMA 传输的相关参数也可以通过 ioctl() 接口来设置，但这里为了简洁，统一归到了 write() 中</p></blockquote> <h3 id="信号机制"><a href="#信号机制" class="header-anchor">#</a> 信号机制</h3> <p>虽然从示例代码上来看，DMA 传输结束可以根据 DMA 控制寄存器的最低 1 位来轮询判断，但这也会造成 CPU 浪费。因此我们也需要考虑当 DMA 传输完成时，怎么通知到用户空间程序。</p> <p>由于一般的 DMA 传输是异步的，因此不能和之前的阶乘计算一样使用等待队列阻塞 read() 来完成。这里的处理方法有 I/O 多路复用（select()/poll()/epoll()）或者信号机制，由于 EDU 设备较简单，只需要知道单次 DMA 传输是否完成，没有高并发的场景，因此我们选择使用信号机制。</p> <p>信号机制可以先参考这篇文章：<a href="https://www.cnblogs.com/sewain/p/15690948.html" target="_blank" rel="noopener noreferrer">Linux驱动实践：驱动程序如何发送【信号】给应用程序？<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <p>首先，我们要知道信号发送给哪一个进程，我们通过在用户空间程序执行 open 时进行记录来完成。（这并不是一个通用做法，尤其是当设备可能会被多个进程打开时，这会导致错误。目前我们假设在同一时间，只有一个进程打开设备）</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>static int edu_open(struct inode *inode, struct file *filp) {
+    struct edu_device *edu_dev;
+
+    edu_dev = container_of(inode-&gt;i_cdev, struct edu_device, cdev);
+
+    // Store current process id
+    edu_dev-&gt;user_pid = get_pid(task_pid(current));
+
+    // Store edu_device point in filp-&gt;private_data
+    filp-&gt;private_data = edu_dev;
+
+    return 0;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p>然后我们就可以在中断处理函数中进行信号的发送：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>	···   
+    struct task_struct *task;
+    struct kernel_siginfo info;
+
+    memset(&amp;info, 0, sizeof(struct kernel_siginfo));
+    info.si_signo = SIGUSR1;
+    info.si_code = SI_QUEUE;
+    info.si_int = DMA_RAM2EDU;
+	···  
+	task = get_pid_task(edu_dev-&gt;user_pid, PIDTYPE_PID);
+    if (task) {
+        if (send_sig_info(SIGUSR1, &amp;info, task) &lt; 0) {
+            printk(KERN_ERR
+                   &quot;[%s] DMA IRQ: Failed to send signal to pid %d\n&quot;,
+                   DRIVER_NAME, task_pid_nr(task));
+        }
+    	put_task_struct(task);
+	}
+	···   
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><p>这里使用 kernel_siginfo 结构体，其主要是可以附带一个额外的数据，我们用它来指示传输的方向，方便测试代码获取使用；使用 get_pid_task() 获取指定 pid 的 task 结构体；使用 send_sig_info() 向该进程发送一个附带 info 的 SIGUSER1 信号。最后使用 put_task_struct() 平衡引用计数，避免内存泄漏。</p> <h3 id="中断上下文的坑"><a href="#中断上下文的坑" class="header-anchor">#</a> 中断上下文的坑</h3> <p>在上面的设计中，我们留了两个工作交给中断处理函数：</p> <ol><li>当 DMA 传输方向是由设备往内存时，需要把数据从内核空间拷贝至用户空间。</li> <li>释放由 dma_alloc_coherent() 函数分配的 DMA 缓冲区。</li></ol> <p>但实际操作下来发现，这两件事情都不能简单地在中断处理函数中处理。</p> <p>在中断处理函数中使用 copy_to_user() 时会返回错误，使用 dma_free_coherent() 时系统日志会提示警告：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>WARNING: CPU: 0 PID: 0 at kernel/dma/mapping.c:528 dma_free_attrs+0x42/0x60
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>这都是因为错误的上下文（即中断上下文和普通的进程上下文不同，在中断上下文中，用户空间是不可控的）（PS：这句话有错误可以联系纠正）</p> <p>因此我们需要其他方法来在中断处理函数中完成以上两个工作。</p> <p>我们使用工作队列（workqueue）来处理缓冲区释放的问题，在 edu_device 结构体中添加工作队列：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>struct edu_device {
+	···
+    struct work_struct dma_work;
+};
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>并在 edu_probe() 中进行初始化</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>	···
+	INIT_WORK(&amp;edu_dev-&gt;dma_work, dma_work_fn);
+	···
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>free_dma_work_fn() 函数以及它在中断处理函数中的延迟调用</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>void free_dma_work_fn(struct work_struct *work) {
+    struct edu_device *edu_dev =
+        container_of(work, struct edu_device, free_dma_work);
+
+    dma_free_coherent(&amp;edu_dev-&gt;pdev-&gt;dev, edu_dev-&gt;dma_count,
+                      edu_dev-&gt;dma_buffer, edu_dev-&gt;dma_addr);
+}
+
+static irqreturn_t edu_irq_handler(int irq, void *dev_id) {
+	···
+    // Check if DMA interrupt
+    if (edu_dev-&gt;user_pid &amp;&amp; status == DMA_IRQ_VALUE) {
+        schedule_work(&amp;edu_dev-&gt;dma_work);
+    }
+	···
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><p>然而实际测试下来 copy_to_user() 也无法在工作队列中正常执行（<a href="https://stackoverflow.com/questions/41617907/how-to-use-copy-to-user-in-workqueue-linux-kernel" target="_blank" rel="noopener noreferrer">相似问题<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>），因此只能选择其他的方法。为了避免引入其他机制让驱动程序更复杂，我们选择让用户空间程序收到信号通知后手动取得数据，即在 edu_read() 中约定一个偏移量。（同上，也可以通过 ioctl() 接口来获得）</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>#define EDU_DMA_GET 0x1234
+static ssize_t edu_read(struct file *filp, char __user *buf, size_t count,
+                        loff_t *ppos) {
+	···    
+    case EDU_DMA_GET: {
+        // Get data back, ignore 'buf' and 'count' parameters
+        if (copy_to_user((void __user *)edu_dev-&gt;dma_dst_address,
+                         edu_dev-&gt;dma_buffer, edu_dev-&gt;dma_count)) {
+            printk(KERN_ERR &quot;[%s] DMA GET: Failed to copy_to_user\n&quot;,
+                   DRIVER_NAME);
+            return -EFAULT;
+        }
+        break;
+    }
+    ···
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><p>（注意，修改后的 edu_read() 只接受 EDU_FACT_CALC 和 EDU_DMA_GET 两个偏移量的读取，读者有需求可以自行添加）</p> <h3 id="测试代码"><a href="#测试代码" class="header-anchor">#</a> 测试代码</h3> <p>具体代码可见源码 <a href="https://github.com/jklincn/qemu_edu_driver/blob/master/user_test.c" target="_blank" rel="noopener noreferrer">user_test.c<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 。</p> <p>测试流程：</p> <ol><li>首先是对阶乘计算寄存器（factorial computation）写入和读取来验证阶乘计算功能的正确性（包括阻塞读取）。</li> <li>然后是测试 DMA 从内存往设备传输的功能，把 write_buffer 的内容传输到设备中。</li> <li>再测试 DMA 从设备往主存传输的功能，把设备中的内存传输到 read_buffer 这片空间中。</li> <li>最后对比 write_buffer 和 read_buffer 的内容是否一致来检测 DMA 传输的正确性。</li></ol> <h2 id="进一步封装"><a href="#进一步封装" class="header-anchor">#</a> 进一步封装</h2> <p>这部分和设备驱动程序已经无关了，是个人的一些想法。由于我们目前的用户空间程序需要手动进行 open 和 write 等系统调用，还是属于比较底层的编程，那有没有办法对用户使用设备更友好呢？参考了 NVIDIA Driver 和 CUDA Toolkit 的关系，我们可以自己再做一个类似 EDU Toolkit，提供头文件和动态链接库，进一步包装 EDU 设备的底层操作。这部分代码见 edu_lib 文件夹。</p> <p>首先创建一个头文件，声明想要提供的函数</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>#include &lt;fcntl.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;unistd.h&gt;
+
+#define EDU_DEVICE &quot;/dev/edu&quot;
+
+#define EDU_FACT_CALC 0x08
+
+int edu_init(void);
+
+uint32_t edu_fact(uint32_t x);
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><p>然后在 edu.c 中实现这些函数</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>#include &quot;edu.h&quot;
+
+int fd;
+
+int edu_init(void) {
+    fd = open(EDU_DEVICE, O_RDWR);
+    if (fd &lt; 0) {
+        return -1;
+    }
+    return 0;
+}
+
+uint32_t edu_fact(uint32_t x) {
+    uint32_t read_value, write_value;
+    write_value = x;
+    if (pwrite(fd, &amp;write_value, sizeof(write_value), EDU_FACT_CALC) ==
+        sizeof(write_value)) {
+    } else {
+        close(fd);
+        return -1;
+    }
+
+    // Get factorial result
+    if (pread(fd, &amp;read_value, sizeof(read_value), EDU_FACT_CALC) ==
+        sizeof(read_value)) {
+    } else {
+        close(fd);
+        return -1;
+    }
+
+    return read_value;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br></div></div><p>这样，用户代码就可以简单地写为</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>#include &lt;stdio.h&gt;
+
+#include &quot;edu.h&quot;
+
+int main() {
+    unsigned int x = 10, result = 0;
+    if (edu_init() &lt; 0) {
+        printf(&quot;Failed to init edu device.\n&quot;);
+        return -1;
+    }
+    if ((result = edu_fact(x)) &lt; 0) {
+        printf(&quot;Failed to factorial computation.\n&quot;);
+        return -1;
+    } else {
+        printf(&quot;The factorial of %d is %d\n&quot;, x, result);
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><p>进行测试</p> <div class="language- line-numbers-mode"><pre class="language-text"><code># 编译动态链接库
+gcc -fPIC -shared -o libedu.so edu.c
+
+# 编译用户程序
+gcc test.c -L. -ledu -o test
+
+# 运行用户程序
+sudo LD_LIBRARY_PATH=. ./test
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><p>这里只是做一个最简单的示例，体现了更高级别的封装。</p></div></div> <!----> <div class="page-edit"><div class="edit-link"><a href="https://github.com/xugaoyi/vuepress-theme-vdoing/edit/master/docs/05.开源/23.QEMU EDU 设备驱动.md" target="_blank" rel="noopener noreferrer">编辑</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2024/12/03, 8:12:00</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/473c34/" class="page-nav-centre page-nav-centre-prev"><div class="tooltip">实现一个cpu通过模拟逻辑门</div></a> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/1ec6f5/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">手写操作系统学习</div></a></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/473c34/" class="prev">实现一个cpu通过模拟逻辑门</a></span> <span class="next"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/1ec6f5/">手写操作系统学习</a>→
+      </span></p></div></div></div> <!----></main></div> <div class="footer"><!----> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2024-2025
+    <span>kamiba | MIT License</span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"></div></div>
+    <script src="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/app.e20338f0.js" defer></script><script src="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/4.0a1770ce.js" defer></script><script src="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/3.5fe0b606.js" defer></script><script src="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/2.952c14e1.js" defer></script><script src="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/184.f736054d.js" defer></script>
+  </body>
+</html>

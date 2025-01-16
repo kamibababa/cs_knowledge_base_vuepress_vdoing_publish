@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>vue3+element搭建经典布局 | 一亩三分地</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    <link rel="icon" href="/cs_knowledge_base_vuepress_vdoing_publish/img/favicon.ico">
+    <meta name="description" content="web前端技术博客,简洁至上,专注web前端学习与总结。JavaScript,js,ES6,TypeScript,vue,python,css3,html5,Node,git,github等技术文章。">
+    <meta name="keywords" content="前端博客,个人技术博客,前端,前端开发,前端框架,web前端,前端面试题,技术文档,学习,面试,JavaScript,js,ES6,TypeScript,vue,python,css3,html5,Node,git,github,markdown">
+    <meta name="theme-color" content="#11a8cd">
+    
+    <link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/css/0.styles.87f66710.css" as="style"><link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/app.e20338f0.js" as="script"><link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/4.0a1770ce.js" as="script"><link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/3.5fe0b606.js" as="script"><link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/2.952c14e1.js" as="script"><link rel="preload" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/26.02cde8c1.js" as="script"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/1.ffdd0f4a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/10.733b4090.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/100.8988fbda.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/101.0648c38a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/102.60c6fb35.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/103.333708e1.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/104.79d71a4e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/105.1be97b21.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/106.bae470ff.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/107.47f52ded.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/108.fe039118.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/109.b0f37852.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/11.6801ef91.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/110.7dac4dcb.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/111.28c49093.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/112.e1952b70.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/113.14305e5c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/114.e8b79fbe.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/115.6e64c2ab.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/116.f0dda052.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/117.2fabcdd5.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/118.e7fd60dd.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/119.33a436bc.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/12.25b88290.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/120.c29e52f4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/121.edaa5e84.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/122.16df3471.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/123.182c1ddd.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/124.d36d5cdb.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/125.0ebec260.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/126.63a047a2.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/127.4920c20c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/128.e5072b6c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/129.924ae959.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/13.72a3d56d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/130.6307f6eb.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/131.ba006b29.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/132.212757cb.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/133.f8f299d4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/134.094aa965.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/135.68b1b456.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/136.ebd4017b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/137.555e8267.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/138.209ed71d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/139.59d3ce91.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/14.00c4d42e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/140.3a035862.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/141.62553494.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/142.4f3f431c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/143.1cffd997.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/144.e535819c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/145.13e1c753.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/146.b770440e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/147.a19f0c9a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/148.0755e776.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/149.09382547.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/15.b49fb3dd.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/150.2f33a54e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/151.9a670809.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/152.a6e6a440.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/153.4f7f1998.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/154.c642bc59.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/155.5b0bbe6e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/156.b7b980ca.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/157.a824b65b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/158.c634a203.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/159.3cc46c68.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/16.cc7b110a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/160.8bc40058.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/161.6b33088e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/162.a21861c2.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/163.c43e66c9.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/164.74038262.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/165.449c3f8e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/166.ecb6064c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/167.93bebda4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/168.a9285a86.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/169.14628ce4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/17.dda61996.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/170.cb080ae3.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/171.3c6d8998.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/172.cf75a1ea.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/173.f66209c2.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/174.fbc96323.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/175.503a035b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/176.512ded7b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/177.240594e6.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/178.fb06697a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/179.985cf920.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/18.bfbab2f5.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/180.a2bf1559.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/181.ad643c60.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/182.6a86fd13.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/183.4bdd985c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/184.f736054d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/185.4e11e4ca.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/186.36c43a3b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/187.34cf573f.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/188.ee4b1840.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/189.7590c26d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/19.fc24c798.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/190.9df6e7da.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/191.e55bfc5e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/192.1272b3be.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/193.1e923a54.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/20.6d5b5a67.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/21.dfda3fd0.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/22.d5d29211.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/23.94d21a3a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/24.7ea7a0f4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/25.3cc233a3.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/27.426d0a37.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/28.9a8e6388.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/29.31efb461.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/30.8c07bd6b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/31.e4a610c4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/32.f54f6f68.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/33.caf66eb2.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/34.62c5d18b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/35.f40dee00.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/36.9c5fbaa5.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/37.3888f1e6.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/38.cc7e0d00.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/39.456ce901.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/40.c2dd678d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/41.6f6ba694.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/42.6f0fee02.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/43.8b585e93.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/44.5eee52f3.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/45.89461dd9.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/46.fe301695.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/47.d1b8b9ef.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/48.ad5e6588.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/49.1520b73e.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/5.b9e0dfbd.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/50.41f4cc9a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/51.4bf153c8.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/52.8861f0fb.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/53.76a2bc89.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/54.7cb19805.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/55.fa69870f.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/56.989aa9d8.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/57.981dbc79.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/58.86f960f7.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/59.ec3ba878.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/6.e23ae425.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/60.602f98e2.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/61.78148690.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/62.c8a9c48d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/63.fef5094b.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/64.1327ecd8.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/65.a866bd56.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/66.44e9f9b8.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/67.ddd45bda.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/68.ebf6a6e5.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/69.1086b17d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/7.e13b578d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/70.82ae9c14.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/71.b7d17679.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/72.6d76e435.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/73.f6726a49.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/74.47fa8b8d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/75.0ac3a091.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/76.0322bbb4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/77.fc2cb63f.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/78.a05709bd.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/79.3ca99c51.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/80.ec7ebc9c.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/81.43af823d.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/82.c90aeb40.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/83.d8879477.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/84.9caa0b08.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/85.f7c6683a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/86.5e143a76.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/87.f9c5d0f1.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/88.c47a4e0f.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/89.6987bfa1.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/90.7e164009.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/91.ce52a439.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/92.8cd2f6a7.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/93.abd3e0ed.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/94.5828eba4.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/95.f7a37854.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/96.e01bcd40.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/97.5e7ae40a.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/98.0bed3fe7.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/99.c412bfa6.js"><link rel="prefetch" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/vendors~docsearch.e27ff01b.js">
+    <link rel="stylesheet" href="/cs_knowledge_base_vuepress_vdoing_publish/assets/css/0.styles.87f66710.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/cs_knowledge_base_vuepress_vdoing_publish/" class="home-link router-link-active"><img src="/cs_knowledge_base_vuepress_vdoing_publish/img/EB-logo.png" alt="一亩三分地" class="logo"> <span class="site-name can-hide">一亩三分地</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/cs_knowledge_base_vuepress_vdoing_publish/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/2264e8/" class="nav-link">JavaScript</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/802a1ca6f7b71c59/" class="nav-link">Vue</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/javascript/" class="nav-link">《JavaScript教程》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/es6/" class="nav-link">《ES6 教程》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/vue/" class="nav-link">《Vue》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/wx-miniprogram/" class="nav-link">小程序笔记</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="原理" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/theory/" class="link-title">原理</a> <span class="title" style="display:none;">原理</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/ae99f1/" class="nav-link">连接池</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="开源" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/opensource/" class="link-title">开源</a> <span class="title" style="display:none;">开源</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/3ed8ea/" class="nav-link">learnbydo</a></li></ul></div></div> <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><!----> <nav class="nav-links"><div class="nav-item"><a href="/cs_knowledge_base_vuepress_vdoing_publish/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>前端文章</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/2264e8/" class="nav-link">JavaScript</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/802a1ca6f7b71c59/" class="nav-link">Vue</a></li></ul></li><li class="dropdown-item"><h4>学习笔记</h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/javascript/" class="nav-link">《JavaScript教程》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/es6/" class="nav-link">《ES6 教程》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/vue/" class="nav-link">《Vue》笔记</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/typescript-axios/" class="nav-link">《TypeScript 从零实现 axios》</a></li><li class="dropdown-subitem"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/wx-miniprogram/" class="nav-link">小程序笔记</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="原理" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/theory/" class="link-title">原理</a> <span class="title" style="display:none;">原理</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/ae99f1/" class="nav-link">连接池</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="开源" class="dropdown-title"><a href="/cs_knowledge_base_vuepress_vdoing_publish/opensource/" class="link-title">开源</a> <span class="title" style="display:none;">开源</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/3ed8ea/" class="nav-link">learnbydo</a></li></ul></div></div> <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>JavaScript文章</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Vue文章</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>TypeScript</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>学习笔记</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>element-plus</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/763b73/" aria-current="page" class="active sidebar-link">vue3+element搭建经典布局</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/a070b4/" class="sidebar-link">vue3-element-vue-router-pinia-quiz-app</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/d66b6b/" class="sidebar-link">vue3+element文件上传</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/626014/" class="sidebar-link">element日历组件简单使用</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/c4fe54/" class="sidebar-link">前后端分离树形组件</a></li><li><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/c77a5f/" class="sidebar-link">前后端分离实战小练习之美国大选投票</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>codewars</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>react</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>realworld</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>翻译</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-057748f7><div class="articleInfo" data-v-057748f7><ul class="breadcrumbs" data-v-057748f7><li data-v-057748f7><a href="/cs_knowledge_base_vuepress_vdoing_publish/" title="首页" class="iconfont icon-home router-link-active" data-v-057748f7></a></li> <li data-v-057748f7><a href="/cs_knowledge_base_vuepress_vdoing_publish/web/#前端" data-v-057748f7>前端</a></li><li data-v-057748f7><a href="/cs_knowledge_base_vuepress_vdoing_publish/web/#element-plus" data-v-057748f7>element-plus</a></li></ul> <div class="info" data-v-057748f7><!----> <div title="创建时间" class="date iconfont icon-riqi" data-v-057748f7><a href="javascript:;" data-v-057748f7>2024-11-13</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABKFJREFUSA3tVl1oFVcQnrMbrak3QUgkya1akpJYcrUtIqW1JvFBE9LiQ5v6JmJpolbMg32rVrhgoYK0QiMY6i9Y6EMaW5D+xFJaTYItIuK2Kr3+BJNwkxBj05sQY3b3nM6cs2dv9t7NT/vQJw/sndk5M/PNzJkzewGerP+pAmy+ON8lLzUJgA8ZYxYIYZmGYRnctDaWvJJAmTtfP1pvXsBCCPP8QFcCaRkZYACgDZFO4stNIcBCajEOlmmC9XpJ9bAGCaPaPmzPl32dvLSVu3BWCTQs0XQQ6g0DYgwLIoAZbBCdW/i+781o1VVlm/410mw4h06Y7bIPHNyWDyL4FHkX03Q8SrzNhZTZriieckWt7cL6MM85YcLpsi/7O9/iXFT6MswI0DmmpkSaJ0qLxFIm3+i1THHB3zmBH3PYx9CcykcLOeQVVa7QtdxTgQgEleX2AjHYfwA+2ddV77ruGoJUbhGDI09YSNXyMpUt5ylOzxgbUmtOp7NmbNt8v3arjTBfYELmLUV+M+nSawNNAUqpT3ClJWg5I3BLT+cGW/DXNGCa6tx1aakCGEigArTn4TDIPdrXXYKCZNrHLMCOEPvHBlLQ99s9eHB7EB6NTki73CVPQ2F5MSx/uRQixfmq7rK0wYD8w8E905bnPDfwoWs/rfv93NWN/ZfvwsLIU7A09gxECyISeGJkHAau98L97tuw7NXnoPyNF8FcYGLGKsOs0mN3OEyec9esGW/ZEl945dTP34wlR2FZVQWU1q0Cw8Tr7p+hgLLNL0FPxx/Q35mA8aEUrH6nCgwEl0tn7wUiZYJnNRh6DK4UH/k0lfyrsBKdPVv/AriGIQcEDQZ65LBAGe2Rzui9Ybjz7XUppz1/uKBbyVPGkN3ZAeC6hr0x7Nr38N5+EqkoOm17xpoqR9ohQF55ERSvr4Dkr3chNfC3DMzGJlNBElW8w9nsGQvhNGIzDkXzCg8cLK951xHsFBlTJspJNi3ZFIMF2AeDV3q8DNOB+YHi6QTrChDIWDBRi5U5f+ZMfJLu3ccrqxtdxk4SKH336LFxSmkqefwU5T8fhdSdQf9IVKD6aNiwI/hnmcAZ91isYMJIaCUCx9W098+LgruikeTqzqqxKPUwqJyCPJiyemVVZBOijDGjD38Os0jOiSPL1z3SPjXNANbiNPXAdzTfukjjuknNBbyz3nwgTd3AVFqUJ5hpHlq9MveLnWwttUfoygBmvVjuikxND3znrhsELnZk7k+OjIGxeNEkomyLVta0xxn+HZhjBc4YZ/AFjHjz9u3xRZl2BN4aq9nFwWh16IrQ1aHHEd3j1+4/dB9OtH4e29A2H1DyHQRmOSfQZ1Fy7MHBTGB6J/Djq6p3OxyO2cB+4Car7v/o3GXgfAkj23+x9ID1Teoamo/SXcbvSf2PX7Vc8DdCmE1vN9di+32P9/5YR3vLnhCVGUWBjEkr3yh4H8v9CzmsbdhzOKzsJKM90iFdaTMjRPhGVsakRvOaRidljo6H6G7j+ctrJpsP+4COhDIl0La2+FS4+5mlocBaXY5QnGZysIBYoeSsl5qQzrSj/cgNrfuEzlWBfwA+EjrZyWUvpAAAAABJRU5ErkJggg==">vue3+element搭建经典布局<!----></h1> <!----> <div class="theme-vdoing-content content__default"><h3 id="创建vue项目"><a href="#创建vue项目" class="header-anchor">#</a> 创建vue项目</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>pnpm create vite
+pnpm install
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h3 id="安装-element-plus"><a href="#安装-element-plus" class="header-anchor">#</a> 安装 element-plus</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>pnpm install element-plus
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="修改main-ts"><a href="#修改main-ts" class="header-anchor">#</a> 修改main.ts</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>// main.ts
+import { createApp } from 'vue'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import App from './App.vue'
+
+const app = createApp(App)
+
+app.use(ElementPlus)
+app.mount('#app')
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><h3 id="安装element图标"><a href="#安装element图标" class="header-anchor">#</a> 安装element图标</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>pnpm install @element-plus/icons-vue
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="注册图标"><a href="#注册图标" class="header-anchor">#</a> 注册图标</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>// main.ts
+
+// 如果您正在使用CDN引入，请删除下面一行。
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
+const app = createApp(App)
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><h3 id="安装-types-node"><a href="#安装-types-node" class="header-anchor">#</a> 安装@types/node</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>pnpm install @types/node
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="支持-别名"><a href="#支持-别名" class="header-anchor">#</a> 支持@别名</h3> <p>vite.config.ts</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import {resolve} from 'path'
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [vue()],
+  resolve:{
+    alias:{
+      '@':resolve(__dirname, 'src')
+    }
+  }
+})
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p>tsconfig.app.json</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>......
+&quot;noUncheckedSideEffectImports&quot;: true,
+&quot;paths&quot;:{
+  &quot;@/*&quot;:[&quot;./src/*&quot;]
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h3 id="安装vue-router"><a href="#安装vue-router" class="header-anchor">#</a> 安装vue-router</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>pnpm install vue-router
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="src-router-index-ts"><a href="#src-router-index-ts" class="header-anchor">#</a> src/router/index.ts</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>import { createWebHashHistory, createRouter } from 'vue-router'
+
+
+const routes = [
+  { 
+    path: '/', 
+    name: 'home',
+    component: () =&gt; import('@/layout/index.vue'),
+    children:[
+      {
+        path: 'article',
+        name: '文章管理',
+        meta:{
+          icon:'food'
+        },
+        children:[
+          { 
+            path: '/article/all_article', 
+            name: '全部文章',
+            component: () =&gt; import('@/views/article/all_article.vue') 
+          },
+          { 
+            path: '/article/my_article', 
+            name: 'my_article',
+            component: () =&gt; import('@/views/article/my_article.vue') 
+          }
+        ]
+      },
+      {
+        path: 'comment',
+        name: 'comment',
+        meta:{
+          icon:'edit'
+        },
+        children:[
+          { 
+            path: '/comment/all_comment', 
+            name: 'all_comment',
+            component: () =&gt; import('@/views/comment/all_comment.vue') 
+          },
+          { 
+            path: '/comment/my_comment', 
+            name: 'my_comment',
+            component: () =&gt; import('@/views/comment/my_comment.vue') 
+          }
+        ]
+      }
+    ]
+  }
+]
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes,
+})
+
+export default router
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br></div></div><h3 id="注册路由"><a href="#注册路由" class="header-anchor">#</a> 注册路由</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>import { createApp } from 'vue'
+import router from './router'
+import App from './App.vue'
+
+createApp(App)
+  .use(router)
+  .mount('#app')
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="修改app-vue"><a href="#修改app-vue" class="header-anchor">#</a> 修改App.vue</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;template&gt;
+  &lt;RouterView&gt;&lt;/RouterView&gt;
+&lt;/template&gt;
+&lt;script setup lang=&quot;ts&quot;&gt;
+
+&lt;/script&gt;
+&lt;style scoped&gt;
+&lt;/style&gt;
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><h3 id="新增views目录"><a href="#新增views目录" class="header-anchor">#</a> 新增views目录</h3> <p><img src="/cs_knowledge_base_vuepress_vdoing_publish/assets/img/1731482815133.65bee825.png" alt="1731482815133"></p> <h3 id="src-layout-index-vue"><a href="#src-layout-index-vue" class="header-anchor">#</a> src/layout/index.vue</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;template&gt;
+layout 
+&lt;RouterView&gt;&lt;/RouterView&gt;
+&lt;/template&gt;
+&lt;script setup lang=&quot;ts&quot;&gt;
+
+&lt;/script&gt;
+&lt;style scoped&gt;
+&lt;/style&gt;
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><h3 id="复制element文档示例container布局容器的最后一个示例代码"><a href="#复制element文档示例container布局容器的最后一个示例代码" class="header-anchor">#</a> 复制element文档示例Container布局容器的最后一个示例代码</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;template&gt;
+  &lt;el-container class=&quot;layout-container-demo&quot; style=&quot;height: 500px&quot;&gt;
+    &lt;el-aside width=&quot;200px&quot;&gt;
+      &lt;el-scrollbar&gt;
+        &lt;el-menu :default-openeds=&quot;['1', '3']&quot;&gt;
+          &lt;el-sub-menu index=&quot;1&quot;&gt;
+            &lt;template #title&gt;
+              &lt;el-icon&gt;&lt;message /&gt;&lt;/el-icon&gt;Navigator One
+            &lt;/template&gt;
+            &lt;el-menu-item-group&gt;
+              &lt;template #title&gt;Group 1&lt;/template&gt;
+              &lt;el-menu-item index=&quot;1-1&quot;&gt;Option 1&lt;/el-menu-item&gt;
+              &lt;el-menu-item index=&quot;1-2&quot;&gt;Option 2&lt;/el-menu-item&gt;
+            &lt;/el-menu-item-group&gt;
+            &lt;el-menu-item-group title=&quot;Group 2&quot;&gt;
+              &lt;el-menu-item index=&quot;1-3&quot;&gt;Option 3&lt;/el-menu-item&gt;
+            &lt;/el-menu-item-group&gt;
+            &lt;el-sub-menu index=&quot;1-4&quot;&gt;
+              &lt;template #title&gt;Option4&lt;/template&gt;
+              &lt;el-menu-item index=&quot;1-4-1&quot;&gt;Option 4-1&lt;/el-menu-item&gt;
+            &lt;/el-sub-menu&gt;
+          &lt;/el-sub-menu&gt;
+          &lt;el-sub-menu index=&quot;2&quot;&gt;
+            &lt;template #title&gt;
+              &lt;el-icon&gt;&lt;icon-menu /&gt;&lt;/el-icon&gt;Navigator Two
+            &lt;/template&gt;
+            &lt;el-menu-item-group&gt;
+              &lt;template #title&gt;Group 1&lt;/template&gt;
+              &lt;el-menu-item index=&quot;2-1&quot;&gt;Option 1&lt;/el-menu-item&gt;
+              &lt;el-menu-item index=&quot;2-2&quot;&gt;Option 2&lt;/el-menu-item&gt;
+            &lt;/el-menu-item-group&gt;
+            &lt;el-menu-item-group title=&quot;Group 2&quot;&gt;
+              &lt;el-menu-item index=&quot;2-3&quot;&gt;Option 3&lt;/el-menu-item&gt;
+            &lt;/el-menu-item-group&gt;
+            &lt;el-sub-menu index=&quot;2-4&quot;&gt;
+              &lt;template #title&gt;Option 4&lt;/template&gt;
+              &lt;el-menu-item index=&quot;2-4-1&quot;&gt;Option 4-1&lt;/el-menu-item&gt;
+            &lt;/el-sub-menu&gt;
+          &lt;/el-sub-menu&gt;
+          &lt;el-sub-menu index=&quot;3&quot;&gt;
+            &lt;template #title&gt;
+              &lt;el-icon&gt;&lt;setting /&gt;&lt;/el-icon&gt;Navigator Three
+            &lt;/template&gt;
+            &lt;el-menu-item-group&gt;
+              &lt;template #title&gt;Group 1&lt;/template&gt;
+              &lt;el-menu-item index=&quot;3-1&quot;&gt;Option 1&lt;/el-menu-item&gt;
+              &lt;el-menu-item index=&quot;3-2&quot;&gt;Option 2&lt;/el-menu-item&gt;
+            &lt;/el-menu-item-group&gt;
+            &lt;el-menu-item-group title=&quot;Group 2&quot;&gt;
+              &lt;el-menu-item index=&quot;3-3&quot;&gt;Option 3&lt;/el-menu-item&gt;
+            &lt;/el-menu-item-group&gt;
+            &lt;el-sub-menu index=&quot;3-4&quot;&gt;
+              &lt;template #title&gt;Option 4&lt;/template&gt;
+              &lt;el-menu-item index=&quot;3-4-1&quot;&gt;Option 4-1&lt;/el-menu-item&gt;
+            &lt;/el-sub-menu&gt;
+          &lt;/el-sub-menu&gt;
+        &lt;/el-menu&gt;
+      &lt;/el-scrollbar&gt;
+    &lt;/el-aside&gt;
+
+    &lt;el-container&gt;
+      &lt;el-header style=&quot;text-align: right; font-size: 12px&quot;&gt;
+        &lt;div class=&quot;toolbar&quot;&gt;
+          &lt;el-dropdown&gt;
+            &lt;el-icon style=&quot;margin-right: 8px; margin-top: 1px&quot;&gt;
+              &lt;setting /&gt;
+            &lt;/el-icon&gt;
+            &lt;template #dropdown&gt;
+              &lt;el-dropdown-menu&gt;
+                &lt;el-dropdown-item&gt;View&lt;/el-dropdown-item&gt;
+                &lt;el-dropdown-item&gt;Add&lt;/el-dropdown-item&gt;
+                &lt;el-dropdown-item&gt;Delete&lt;/el-dropdown-item&gt;
+              &lt;/el-dropdown-menu&gt;
+            &lt;/template&gt;
+          &lt;/el-dropdown&gt;
+          &lt;span&gt;Tom&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/el-header&gt;
+
+      &lt;el-main&gt;
+        &lt;el-scrollbar&gt;
+          &lt;el-table :data=&quot;tableData&quot;&gt;
+            &lt;el-table-column prop=&quot;date&quot; label=&quot;Date&quot; width=&quot;140&quot; /&gt;
+            &lt;el-table-column prop=&quot;name&quot; label=&quot;Name&quot; width=&quot;120&quot; /&gt;
+            &lt;el-table-column prop=&quot;address&quot; label=&quot;Address&quot; /&gt;
+          &lt;/el-table&gt;
+        &lt;/el-scrollbar&gt;
+      &lt;/el-main&gt;
+    &lt;/el-container&gt;
+  &lt;/el-container&gt;
+&lt;/template&gt;
+
+&lt;script lang=&quot;ts&quot; setup&gt;
+import { ref } from 'vue'
+import { Menu as IconMenu, Message, Setting } from '@element-plus/icons-vue'
+
+const item = {
+  date: '2016-05-02',
+  name: 'Tom',
+  address: 'No. 189, Grove St, Los Angeles',
+}
+const tableData = ref(Array.from({ length: 20 }).fill(item))
+&lt;/script&gt;
+
+&lt;style scoped&gt;
+.layout-container-demo .el-header {
+  position: relative;
+  background-color: var(--el-color-primary-light-7);
+  color: var(--el-text-color-primary);
+}
+.layout-container-demo .el-aside {
+  color: var(--el-text-color-primary);
+  background: var(--el-color-primary-light-8);
+}
+.layout-container-demo .el-menu {
+  border-right: none;
+}
+.layout-container-demo .el-main {
+  padding: 0;
+}
+.layout-container-demo .toolbar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  right: 20px;
+}
+&lt;/style&gt;
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br></div></div><h3 id="修改成如下"><a href="#修改成如下" class="header-anchor">#</a> 修改成如下</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;template&gt;
+  &lt;el-container class=&quot;layout-container-demo&quot;&gt;
+    &lt;el-header style=&quot;text-align: right; font-size: 12px&quot;&gt;
+      &lt;div class=&quot;toolbar&quot;&gt;
+        &lt;el-dropdown&gt;
+          &lt;el-icon style=&quot;margin-right: 8px; margin-top: 1px&quot;&gt;
+            &lt;setting /&gt;
+          &lt;/el-icon&gt;
+          &lt;template #dropdown&gt;
+            &lt;el-dropdown-menu&gt;
+              &lt;el-dropdown-item&gt;View&lt;/el-dropdown-item&gt;
+              &lt;el-dropdown-item&gt;Add&lt;/el-dropdown-item&gt;
+              &lt;el-dropdown-item&gt;Delete&lt;/el-dropdown-item&gt;
+            &lt;/el-dropdown-menu&gt;
+          &lt;/template&gt;
+        &lt;/el-dropdown&gt;
+        &lt;span&gt;Tom&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/el-header&gt;
+
+    &lt;el-container&gt;
+      &lt;el-aside width=&quot;200px&quot;&gt;
+        &lt;el-menu router background-color=&quot;#000&quot; text-color=&quot;#fff&quot;&gt;
+          &lt;el-sub-menu index=&quot;/article&quot;&gt;
+            &lt;template #title&gt;
+              &lt;el-icon&gt;
+                &lt;message /&gt;
+              &lt;/el-icon&gt;文章管理
+            &lt;/template&gt;
+            &lt;el-menu-item index=&quot;/article/all_article&quot;&gt;全部文章&lt;/el-menu-item&gt;
+            &lt;el-menu-item index=&quot;/article/my_article&quot;&gt;my_article&lt;/el-menu-item&gt;
+          &lt;/el-sub-menu&gt;
+          &lt;el-sub-menu index=&quot;/comment&quot;&gt;
+            &lt;template #title&gt;
+              &lt;el-icon&gt;
+                &lt;message /&gt;
+              &lt;/el-icon&gt;评论管理
+            &lt;/template&gt;
+            &lt;el-menu-item index=&quot;/comment/all_comment&quot;&gt;all_comment&lt;/el-menu-item&gt;
+            &lt;el-menu-item index=&quot;/comment/my_comment&quot;&gt;my_comment&lt;/el-menu-item&gt;
+          &lt;/el-sub-menu&gt;
+        &lt;/el-menu&gt;
+      &lt;/el-aside&gt;
+
+      &lt;el-main&gt;
+        &lt;RouterView&gt;&lt;/RouterView&gt;
+      &lt;/el-main&gt;
+    &lt;/el-container&gt;
+  &lt;/el-container&gt;
+&lt;/template&gt;
+
+&lt;script lang=&quot;ts&quot; setup&gt;
+import { Message, Setting } from '@element-plus/icons-vue'
+
+&lt;/script&gt;
+
+&lt;style scoped&gt;
+.layout-container-demo{
+  height: 100%;
+}
+.layout-container-demo .el-header {
+  background-color: black;
+  color: white;
+}
+
+.layout-container-demo .el-aside {
+  color: white;
+  background: black;
+}
+
+.layout-container-demo .el-menu {
+  border-right: none;
+}
+
+.layout-container-demo .toolbar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+&lt;/style&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br></div></div><h3 id="解析一下样式"><a href="#解析一下样式" class="header-anchor">#</a> 解析一下样式</h3> <p><img src="/cs_knowledge_base_vuepress_vdoing_publish/assets/img/1731483773848.b1d3f8bb.png" alt="1731483773848"></p> <p>最外层el-container高度100%，el-header有个固定高度，里面el-container占据剩余空间</p> <h3 id="修改main-ts-2"><a href="#修改main-ts-2" class="header-anchor">#</a> 修改main.ts</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>import '@/style.css'
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="修改sytle-css"><a href="#修改sytle-css" class="header-anchor">#</a> 修改sytle.css</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>html,body,#app{
+  height: 100%;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h3 id="最终效果"><a href="#最终效果" class="header-anchor">#</a> 最终效果</h3> <p><img src="/cs_knowledge_base_vuepress_vdoing_publish/assets/img/1731483340716.4bde5d9b.png" alt="1731483340716"></p> <h3 id="更动态的写法"><a href="#更动态的写法" class="header-anchor">#</a> 更动态的写法</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;template&gt;
+  &lt;el-container class=&quot;layout-container-demo&quot;&gt;
+    &lt;el-header style=&quot;text-align: right; font-size: 12px&quot;&gt;
+      &lt;div class=&quot;toolbar&quot;&gt;
+        &lt;el-dropdown&gt;
+          &lt;el-icon style=&quot;margin-right: 8px; margin-top: 1px&quot;&gt;
+            &lt;setting /&gt;
+          &lt;/el-icon&gt;
+          &lt;template #dropdown&gt;
+            &lt;el-dropdown-menu&gt;
+              &lt;el-dropdown-item&gt;View&lt;/el-dropdown-item&gt;
+              &lt;el-dropdown-item&gt;Add&lt;/el-dropdown-item&gt;
+              &lt;el-dropdown-item&gt;Delete&lt;/el-dropdown-item&gt;
+            &lt;/el-dropdown-menu&gt;
+          &lt;/template&gt;
+        &lt;/el-dropdown&gt;
+        &lt;span&gt;Tom&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/el-header&gt;
+
+    &lt;el-container&gt;
+      &lt;el-aside width=&quot;200px&quot;&gt;
+        &lt;el-menu router background-color=&quot;#000&quot; text-color=&quot;#fff&quot;&gt;
+          &lt;el-sub-menu v-for=&quot;item in routes&quot; :index=&quot;item.path&quot;&gt;
+      &lt;template #title&gt;
+        &lt;el-icon&gt;
+          &lt;component :is=&quot;item.meta.icon&quot;&gt;&lt;/component&gt;
+          &lt;!-- &lt;food /&gt; --&gt;
+        &lt;/el-icon&gt;
+        &lt;span&gt;{{item.name}}&lt;/span&gt;
+      &lt;/template&gt;
+      &lt;el-menu-item v-for=&quot;child in item.children&quot; :index=&quot;child.path&quot;&gt;{{child.name}}&lt;/el-menu-item&gt;
+    &lt;/el-sub-menu&gt;
+        &lt;/el-menu&gt;
+      &lt;/el-aside&gt;
+
+      &lt;el-main&gt;
+        &lt;RouterView&gt;&lt;/RouterView&gt;
+      &lt;/el-main&gt;
+    &lt;/el-container&gt;
+  &lt;/el-container&gt;
+&lt;/template&gt;
+
+&lt;script lang=&quot;ts&quot; setup&gt;
+import { Message, Setting } from '@element-plus/icons-vue'
+import {useRouter} from 'vue-router'
+const router = useRouter()
+
+const routes = router.getRoutes().filter((item)=&gt;{
+  return item.children.length &gt; 0 &amp;&amp; item.name !== 'home'
+})
+&lt;/script&gt;
+
+&lt;style scoped&gt;
+.layout-container-demo{
+  height: 100%;
+}
+.layout-container-demo .el-header {
+  background-color: black;
+  color: white;
+}
+
+.layout-container-demo .el-aside {
+  color: white;
+  background: black;
+}
+
+.layout-container-demo .el-menu {
+  border-right: none;
+}
+
+.layout-container-demo .toolbar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+&lt;/style&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br></div></div><h3 id="代码"><a href="#代码" class="header-anchor">#</a> 代码</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>https://github.com/kamibababa/vue3-element-admin-template
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div></div></div> <!----> <div class="page-edit"><div class="edit-link"><a href="https://github.com/xugaoyi/vuepress-theme-vdoing/edit/master/docs/01.前端/50.element-plus/01.vue3+element搭建经典布局.md" target="_blank" rel="noopener noreferrer">编辑</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2024/11/13, 16:11:00</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/cs_knowledge_base_vuepress_vdoing_publish/note/wx-miniprogram/" class="page-nav-centre page-nav-centre-prev"><div class="tooltip">小程序笔记</div></a> <a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/a070b4/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">vue3-element-vue-router-pinia-quiz-app</div></a></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/cs_knowledge_base_vuepress_vdoing_publish/note/wx-miniprogram/" class="prev">小程序笔记</a></span> <span class="next"><a href="/cs_knowledge_base_vuepress_vdoing_publish/pages/a070b4/">vue3-element-vue-router-pinia-quiz-app</a>→
+      </span></p></div></div></div> <!----></main></div> <div class="footer"><!----> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2024-2025
+    <span>kamiba | MIT License</span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"></div></div>
+    <script src="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/app.e20338f0.js" defer></script><script src="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/4.0a1770ce.js" defer></script><script src="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/3.5fe0b606.js" defer></script><script src="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/2.952c14e1.js" defer></script><script src="/cs_knowledge_base_vuepress_vdoing_publish/assets/js/26.02cde8c1.js" defer></script>
+  </body>
+</html>
